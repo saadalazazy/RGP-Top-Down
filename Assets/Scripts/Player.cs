@@ -27,9 +27,10 @@ public class Player : MonoBehaviour
     #endregion
 
     #region states
+    [SerializeField] float dashSpeed;
     public enum PlayerState
     {
-        Normal, Attacking, Dead, BeingHit
+        Normal, Attacking, Dead, BeingHit,dash
     }
     [SerializeField] public PlayerState playerState;
     #endregion
@@ -52,6 +53,13 @@ public class Player : MonoBehaviour
     Vector3 impactOnCharcter;
     [SerializeField] float invinsibiltyDuratoin;
     public bool isInvinsable = false;
+
+    [SerializeField] float delaySweitchToNormal;
+    [SerializeField] float delayBeforeEnemyAttacking;
+
+    [SerializeField] PlayerVFX playerVfx;
+
+    [SerializeField] float attackAnimationDuration;
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
@@ -75,6 +83,11 @@ public class Player : MonoBehaviour
         if (input.GetXButton() && characterController.isGrounded && Time.time >= lastAttackTime + attackCooldown)
         {
             SwitchStateTo(PlayerState.Attacking);
+            return;
+        }
+        else if(input.GetShiftButton() && characterController.isGrounded)
+        {
+            SwitchStateTo(PlayerState.dash);
             return;
         }
 
@@ -143,6 +156,17 @@ public class Player : MonoBehaviour
                         float lerpTime = (timePassed - attackSlideDelay) / attackSlideTimeDuration;
                         movmentVelocity = Vector3.Lerp(transform.forward * attackSlideSpeed, Vector3.zero, lerpTime);
                     }
+                    if(input.GetXButton() && characterController.isGrounded)
+                    {
+                        string currentClip = animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+                        attackAnimationDuration = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+                        if(currentClip != "Dualwield_Melee_Attack_Slice" && attackAnimationDuration > 0.5 && attackAnimationDuration < 0.7)
+                        {
+                            input.SetXButton(false);
+                            SwitchStateTo(PlayerState.Attacking);
+                            CalculateMovmentVlocity();
+                        }
+                    }
                 }
                 if (!isPlayer)
                 {
@@ -158,6 +182,9 @@ public class Player : MonoBehaviour
                     movmentVelocity = impactOnCharcter * Time.deltaTime;
                 }
                 impactOnCharcter = Vector3.Lerp(impactOnCharcter, Vector3.zero, Time.deltaTime * 5);
+                break;
+            case PlayerState.dash:
+                movmentVelocity = transform.forward * dashSpeed * Time.deltaTime;
                 break;
         }
 
@@ -178,7 +205,9 @@ public class Player : MonoBehaviour
     public void SwitchStateTo(PlayerState newState)
     {
         if (isPlayer)
-            input.SetXButton(false);
+        {
+            input.ClearCash();
+        }
 
         switch (playerState)
         {
@@ -192,6 +221,8 @@ public class Player : MonoBehaviour
                 return;
             case PlayerState.BeingHit:
                 break;
+            case PlayerState.dash:
+                break;
         }
 
         switch (newState)
@@ -199,13 +230,21 @@ public class Player : MonoBehaviour
             case PlayerState.Normal:
                 break;
             case PlayerState.Attacking:
-                animator.SetTrigger("attack");
-                lastAttackTime = Time.time;
-                if (isPlayer)
+                if(isPlayer)
                 {
-                    attackStartTime = Time.time;
-                    hasStartedSlide = false;
+                    animator.SetTrigger("attack");
+                    lastAttackTime = Time.time;
+                    if (isPlayer)
+                    {
+                        attackStartTime = Time.time;
+                        hasStartedSlide = false;
+                    }
                 }
+                else
+                {
+                    StartCoroutine(DeleySwitchToAttacking());
+                }
+                
                 break;
             case PlayerState.Dead:
                 characterController.enabled = false;
@@ -219,15 +258,29 @@ public class Player : MonoBehaviour
                     StartCoroutine(DeleyCancelInvencable());
                 }
                 break;
+            case PlayerState.dash:
+                animator.SetTrigger("dash");
+                break;
         }
 
         playerState = newState;
         Debug.Log("player state : " + playerState);
     }
+    public void DashAnimationEnd()
+    {
+        SwitchStateTo(PlayerState.Normal);
+    }
 
     public void AttackanimationEnd()
     {
-        SwitchStateTo(PlayerState.Normal);
+        if(isPlayer)
+        {
+            SwitchStateTo(PlayerState.Normal);
+        }
+        else
+        {
+            StartCoroutine(DeleySwitchToNormalState());
+        }
     }
 
     public void BeingHitanimationEnd()
@@ -256,11 +309,39 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(invinsibiltyDuratoin);
         isInvinsable = false;
     }
+    IEnumerator DeleySwitchToNormalState()
+    {
+        yield return new WaitForSeconds(delaySweitchToNormal);
+        SwitchStateTo(PlayerState.Normal);
+    }
+    IEnumerator DeleySwitchToAttacking()
+    {
+        yield return new WaitForSeconds(delayBeforeEnemyAttacking);
+        animator.SetTrigger("attack");
+        lastAttackTime = Time.time;
+    }
     public void AddImpact(Vector3 attacerPos , float force)
     {
         Vector3 impactDir = transform.position - attacerPos;
         impactDir.Normalize();
         impactDir.y = 0;
         impactOnCharcter = impactDir * force;
+    }
+
+    public void PickUpItem(PickUp pickUp)
+    {
+        switch (pickUp.type) 
+        {
+            case PickUp.Type.heal:
+                AddHealthValue(pickUp.value);
+                break;
+            case PickUp.Type.coin:
+                break;
+        }
+    }
+    private void AddHealthValue(float value)
+    {
+        health.TakeHealth(value);
+        playerVfx.HealVfx();
     }
 }

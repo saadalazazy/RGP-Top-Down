@@ -5,7 +5,7 @@ using UnityEngine;
 public class CharacterHealth : MonoBehaviour
 {
     [SerializeField] float maxHealth;
-    float currentHealth;
+    public float currentHealth;
     Player player;
 
     private void Start()
@@ -21,6 +21,12 @@ public class CharacterHealth : MonoBehaviour
         Debug.Log(gameObject.name + "took damage" + damage);
         Debug.Log(gameObject.name + "current health" + currentHealth);
         CheckHealth();
+    }
+    public void TakeHealth(float value) 
+    {
+        currentHealth += value;
+        if(currentHealth >= maxHealth)
+            currentHealth = maxHealth;
     }
     public void CheckHealth()
     {

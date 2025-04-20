@@ -5,7 +5,7 @@ using UnityEngine.VFX;
 public class PlayerVFX : MonoBehaviour
 {
     [SerializeField] VisualEffect foodSteps;
-
+    [SerializeField] VisualEffect healVfx;
     public void UpdateVisualEffect(bool state)
     {
         if(state)
@@ -19,5 +19,9 @@ public class PlayerVFX : MonoBehaviour
             foodSteps.Stop(); 
         }
     }
+    public void HealVfx()
+    {
+        healVfx.Play();
+    }    
     
 }

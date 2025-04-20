@@ -22,4 +22,8 @@ public class AttackEnd : MonoBehaviour
     {
         damage.DisableDamaageCollider();
     }
+    public void DashAnimationEnd()
+    {
+        player.DashAnimationEnd();
+    }
 }
