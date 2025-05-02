@@ -7,8 +7,11 @@ using UnityEngine.InputSystem;
 public class InputManager : MonoBehaviour, Controls.IPlayerActions
 {
     public Vector2 MovmentValue { get; private set; }
-    public event Action JumpEvent;
+    public event Action TargetEvent;
+    public event Action CancelEvent;
     public event Action DodgeEvent;
+
+    private bool isTargeting = false;
     Controls controls;
 
     private void Start()
@@ -21,12 +24,6 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     {
         controls.Player.Disable();
     }
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if (!context.performed) return;
-        JumpEvent?.Invoke();
-    }
-
     public void OnDodge(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
@@ -36,5 +33,25 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public void OnMovment(InputAction.CallbackContext context)
     {
         MovmentValue = context.ReadValue<Vector2>();
+    }
+
+    public void OnTarget(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        if (isTargeting)
+        {
+            CancelEvent?.Invoke();
+        }
+        else
+        {
+            TargetEvent?.Invoke();
+        }
+
+        isTargeting = !isTargeting;
+    }
+    public void ResetTargeting()
+    {
+        isTargeting = false;
     }
 }

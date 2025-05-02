@@ -6,7 +6,7 @@
             "id": "e039d6f7-3186-433d-9021-c843ddf59c7d",
             "actions": [
                 {
-                    "name": "Jump",
+                    "name": "Target",
                     "type": "Button",
                     "id": "f1c25290-f57a-4270-a9bc-6f3d1cdecf6c",
                     "expectedControlType": "Button",
@@ -37,22 +37,33 @@
                 {
                     "name": "",
                     "id": "74061d73-619d-4b87-9bf6-b4edf68a836e",
-                    "path": "<Keyboard>/space",
+                    "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Jump",
+                    "action": "Target",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "71baabc1-c81c-4158-8822-704eb6a2dcac",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamebad",
-                    "action": "Jump",
+                    "action": "Target",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6a7386c9-b346-4674-9090-847574e52927",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Target",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -114,7 +125,7 @@
                 {
                     "name": "left",
                     "id": "af951c55-1271-49cc-9a77-9d8f2ead7aae",
-                    "path": "<Keyboard>/d",
+                    "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
@@ -125,7 +136,7 @@
                 {
                     "name": "right",
                     "id": "3231bdfb-5e09-409d-8f96-5cc2de6aaab5",
-                    "path": "<Keyboard>/a",
+                    "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
@@ -205,7 +216,7 @@
                     "path": "<Gamepad>/leftStick/up",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamebad",
                     "action": "Movment",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -216,7 +227,7 @@
                     "path": "<Gamepad>/leftStick/down",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamebad",
                     "action": "Movment",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -227,7 +238,7 @@
                     "path": "<Gamepad>/leftStick/left",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamebad",
                     "action": "Movment",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -238,7 +249,7 @@
                     "path": "<Gamepad>/leftStick/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Gamebad",
                     "action": "Movment",
                     "isComposite": false,
                     "isPartOfComposite": true
