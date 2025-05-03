@@ -14,4 +14,11 @@ public abstract class PlayerBaseState : State
     {
         stateMachine.Controller.Move((motion + stateMachine.ForceReceiver.Movment)* deltaTime);
     }
+    protected Vector3 CalculateMovment()
+    {
+        Vector3 movment = Vector3.right * stateMachine.InputManager.MovmentValue.x +
+            Vector3.forward * stateMachine.InputManager.MovmentValue.y;
+        movment = Quaternion.Euler(0, -45f, 0) * movment;
+        return movment;
+    }
 }

@@ -28,24 +28,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""e039d6f7-3186-433d-9021-c843ddf59c7d"",
             ""actions"": [
                 {
-                    ""name"": ""Target"",
-                    ""type"": ""Button"",
-                    ""id"": ""f1c25290-f57a-4270-a9bc-6f3d1cdecf6c"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dodge"",
-                    ""type"": ""Button"",
-                    ""id"": ""19101b9d-f4be-4eb5-becf-8d4fc1d929be"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Movment"",
                     ""type"": ""Value"",
                     ""id"": ""e1e75451-3a1c-4ae5-a3b4-afc01e1f5a67"",
@@ -56,61 +38,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""74061d73-619d-4b87-9bf6-b4edf68a836e"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Target"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""71baabc1-c81c-4158-8822-704eb6a2dcac"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamebad"",
-                    ""action"": ""Target"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6a7386c9-b346-4674-9090-847574e52927"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Target"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""b04e5e77-82f3-4ee6-a4d9-6661db958f17"",
-                    ""path"": ""<Keyboard>/shift"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Dodge"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""5422cc6d-5ee0-4bd4-ba92-1c14abaac16c"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamebad"",
-                    ""action"": ""Dodge"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""WASD"",
                     ""id"": ""78fc5eb9-2e82-4e49-a13d-241428acdaca"",
@@ -311,8 +238,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Target = m_Player.FindAction("Target", throwIfNotFound: true);
-        m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Movment = m_Player.FindAction("Movment", throwIfNotFound: true);
     }
 
@@ -375,15 +300,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Target;
-    private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Movment;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Target => m_Wrapper.m_Player_Target;
-        public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Movment => m_Wrapper.m_Player_Movment;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -394,12 +315,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Target.started += instance.OnTarget;
-            @Target.performed += instance.OnTarget;
-            @Target.canceled += instance.OnTarget;
-            @Dodge.started += instance.OnDodge;
-            @Dodge.performed += instance.OnDodge;
-            @Dodge.canceled += instance.OnDodge;
             @Movment.started += instance.OnMovment;
             @Movment.performed += instance.OnMovment;
             @Movment.canceled += instance.OnMovment;
@@ -407,12 +322,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @Target.started -= instance.OnTarget;
-            @Target.performed -= instance.OnTarget;
-            @Target.canceled -= instance.OnTarget;
-            @Dodge.started -= instance.OnDodge;
-            @Dodge.performed -= instance.OnDodge;
-            @Dodge.canceled -= instance.OnDodge;
             @Movment.started -= instance.OnMovment;
             @Movment.performed -= instance.OnMovment;
             @Movment.canceled -= instance.OnMovment;
@@ -453,8 +362,6 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IPlayerActions
     {
-        void OnTarget(InputAction.CallbackContext context);
-        void OnDodge(InputAction.CallbackContext context);
         void OnMovment(InputAction.CallbackContext context);
     }
 }
