@@ -7,7 +7,6 @@ public class PlayerRangedAttackState : PlayerBaseState
     private bool mouseUse;
     private readonly int AnimationAimName = Animator.StringToHash("Aim");
     private readonly int AnimationShootName = Animator.StringToHash("Shoot");
-
     public PlayerRangedAttackState(PlayerStateMachine stateMachine, bool mouseUse) : base(stateMachine)
     {
         this.mouseUse = mouseUse;

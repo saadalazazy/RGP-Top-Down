@@ -2122,6 +2122,20 @@ MonoBehaviour:
     m_ParentHash: -832319471
   - m_Hash: -199418073
     m_ParentHash: -832319471
+  - m_Hash: 318495910
+    m_ParentHash: 756556552
+  - m_Hash: -1947038436
+    m_ParentHash: 756556552
+  - m_Hash: -51004022
+    m_ParentHash: 756556552
+  - m_Hash: -1347012201
+    m_ParentHash: 756556552
+  - m_Hash: -1507367648
+    m_ParentHash: 756556552
+  - m_Hash: 885627960
+    m_ParentHash: 756556552
+  - m_Hash: -706565624
+    m_ParentHash: 756556552
 --- !u!1001 &136067231
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -35146,7 +35160,10 @@ MonoBehaviour:
     <Force>k__BackingField: 15
   <ArrowFireHandler>k__BackingField: {fileID: 9134238636405130717}
   <MovementSpeed>k__BackingField: 6
-  <TargetingMovementSpeed>k__BackingField: 3
+  <Dodge>k__BackingField:
+    <Speed>k__BackingField: 9
+    <Time>k__BackingField: 0.4
+    <CoolDown>k__BackingField: 2
   <RotationSpeed>k__BackingField: 10
 --- !u!114 &9134238636405130714
 MonoBehaviour:

@@ -13,11 +13,12 @@ public class PlayerMovmentState : PlayerBaseState
     public override void Enter()
     {
         stateMachine.Animator.CrossFadeInFixedTime(MovmentBlendtree , 0.1f);
+        stateMachine.InputManager.DodgeEvent += OnDodge;
     }
     public override void Tick(float deltaTime)
     {
         Vector3 movment = CalculateMovmentDiraction();
-        Move(movment * stateMachine.MovementSpeed , deltaTime);
+        Move(movment * stateMachine.MovementSpeed, deltaTime);
         if (stateMachine.InputManager.IsAming)
         {
             stateMachine.SwitchStateTo(new PlayerRangedAttackState(stateMachine,
@@ -26,7 +27,7 @@ public class PlayerMovmentState : PlayerBaseState
         if (stateMachine.InputManager.IsAttacking)
         {
             stateMachine.Animator.SetFloat(MomvmentSpeed, 0, AnimatorDumpTime, 0.9f);
-            stateMachine.SwitchStateTo(new PlayerAttackState(stateMachine,0));
+            stateMachine.SwitchStateTo(new PlayerAttackState(stateMachine, 0));
             return;
         }
         if (stateMachine.InputManager.MovmentValue == Vector2.zero)
@@ -35,10 +36,17 @@ public class PlayerMovmentState : PlayerBaseState
             return;
         }
         stateMachine.Animator.SetFloat(MomvmentSpeed, 1, AnimatorDumpTime, deltaTime);
-        FaceMovementDirection(movment , deltaTime);
+        FaceMovementDirection(movment, deltaTime);
     }
+
+
     public override void Exit()
     {
+        stateMachine.InputManager.DodgeEvent -= OnDodge;
+    }
 
+    void OnDodge()
+    {
+        stateMachine.SwitchStateTo(new PlayerDodgeState(stateMachine));
     }
 }
