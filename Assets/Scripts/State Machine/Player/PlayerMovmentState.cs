@@ -12,12 +12,23 @@ public class PlayerMovmentState : PlayerBaseState
     public PlayerMovmentState(PlayerStateMachine stateMachine) : base(stateMachine) { }
     public override void Enter()
     {
-        stateMachine.Animator.Play(MovmentBlendtree);
+        stateMachine.Animator.CrossFadeInFixedTime(MovmentBlendtree , 0.1f);
     }
     public override void Tick(float deltaTime)
     {
-        Vector3 movment = CalculateMovment();
+        Vector3 movment = CalculateMovmentDiraction();
         Move(movment * stateMachine.MovementSpeed , deltaTime);
+        if (stateMachine.InputManager.IsAming)
+        {
+            stateMachine.SwitchStateTo(new PlayerRangedAttackState(stateMachine,
+                stateMachine.InputManager.IsMouseUse));
+        }
+        if (stateMachine.InputManager.IsAttacking)
+        {
+            stateMachine.Animator.SetFloat(MomvmentSpeed, 0, AnimatorDumpTime, 0.9f);
+            stateMachine.SwitchStateTo(new PlayerAttackState(stateMachine,0));
+            return;
+        }
         if (stateMachine.InputManager.MovmentValue == Vector2.zero)
         {
             stateMachine.Animator.SetFloat(MomvmentSpeed, 0, AnimatorDumpTime, deltaTime);
@@ -29,11 +40,5 @@ public class PlayerMovmentState : PlayerBaseState
     public override void Exit()
     {
 
-    }
-    private void FaceMovementDirection(Vector3 movment , float deltaTime)
-    {
-        Quaternion targetRotation = Quaternion.LookRotation(movment);
-        stateMachine.transform.rotation = Quaternion.Lerp(stateMachine.transform.rotation, targetRotation,
-            stateMachine.RotationSpeed * deltaTime);
     }
 }
