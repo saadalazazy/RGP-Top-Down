@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4985664035735981419}
   - component: {fileID: 7501382838042598898}
   - component: {fileID: 4167282456398965652}
+  - component: {fileID: 8785301390881874854}
   m_Layer: 0
   m_Name: wall_doorway_scaffold
   m_TagString: Untagged
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2270996160366756680}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000008146034, y: 0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.991, y: 0, z: -13.071845}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -104,8 +105,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 4, z: 1.0000006}
-  m_Center: {x: 0, y: 2, z: -0.00000031292439}
+  m_Size: {x: 1.0406494, y: 4, z: 1.0000006}
+  m_Center: {x: -1.4796753, y: 2, z: -0.00000029802322}
+--- !u!65 &8785301390881874854
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270996160366756680}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0239601, y: 4, z: 1.0000006}
+  m_Center: {x: 1.480444, y: 2, z: -0.00000029802322}
 --- !u!1 &2801078687344637213
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2528513388488828538
 Transform:
   m_ObjectHideFlags: 0

@@ -32,8 +32,10 @@ public class RoomGenerator : MonoBehaviour
     private Transform wallsParent;
     private Transform foundationParent;
 
+    private Vector3 originOffset;
     public void GenerateRoom()
     {
+        originOffset = transform.position;
         ClearExistingRoom();
         CreateParentContainers();
         if(makeFloor)
@@ -85,8 +87,9 @@ public class RoomGenerator : MonoBehaviour
         {
             for (int x = 0; x < roomHeight; x++)
             {
-                Vector3 pos = new Vector3(x * tileSize.x + tileOffset.x, 0, -y * tileSize.y + tileOffset.y);
-                Quaternion rot = GetRandomRotation();
+                Vector3 localPos = new Vector3(x * tileSize.x + tileOffset.x, 0, -y * tileSize.y + tileOffset.y);
+                Vector3 pos = transform.TransformPoint(localPos);
+                Quaternion rot = transform.rotation * GetRandomRotation(); // Also apply generator rotation
                 Instantiate(GetRandomPrefab(tiles), pos, rot, floorParent).name = $"Tile_{x}_{y}";
             }
         }
@@ -119,48 +122,61 @@ public class RoomGenerator : MonoBehaviour
     {
         for (int j = 0; j < floorCount; j++)
         {
-            Vector3 pos = new Vector3(0 * wallSize.x, j * wallSize.y, 0);
-            Instantiate(GetRandomPrefab(firstWalls), pos, Quaternion.identity, wallsParent);
+            Vector3 localPos = new Vector3(0 * wallSize.x, j * wallSize.y, 0);
+            Vector3 pos = transform.TransformPoint(localPos);
+            Quaternion rot = transform.rotation;
+            Instantiate(GetRandomPrefab(firstWalls), pos, rot, wallsParent);
 
             for (int i = 1; i < (roomHeight / 2); i++)
             {
-                pos = new Vector3(i * wallSize.x, j * wallSize.y, 0);
-                GameObject prefab = (doorPosX != 0 && i == doorPosX) ? GetRandomPrefab(doors) : GetRandomPrefab(walls);
-                Instantiate(prefab, pos, Quaternion.identity, wallsParent);
+                localPos = new Vector3(i * wallSize.x, j * wallSize.y, 0);
+                pos = transform.TransformPoint(localPos);
+                rot = transform.rotation;
+                GameObject prefab = (doorPosX != 0 && i == doorPosX && j < 1) ? GetRandomPrefab(doors) : GetRandomPrefab(walls);
+                Instantiate(prefab, pos, rot, wallsParent);
             }
 
-            pos = new Vector3((roomHeight / 2) * wallSize.x, j * wallSize.y, 0);
-            Quaternion rot = Quaternion.Euler(0, 180, 0);
+            localPos = new Vector3((roomHeight / 2) * wallSize.x, j * wallSize.y, 0);
+            pos = transform.TransformPoint(localPos);
+            rot = transform.rotation * Quaternion.Euler(0, 180, 0);
             Instantiate(GetRandomPrefab(wallCorners), pos, rot, wallsParent);
 
             for (int i = 1; i < roomWidth / 2; i++)
             {
-                pos = new Vector3((roomHeight / 2) * wallSize.x, j * wallSize.y, -i * wallSize.x);
-                rot = Quaternion.Euler(0, 90, 0);
-                GameObject prefab = (doorPosY != 0 && i == doorPosY) ? GetRandomPrefab(doors) : GetRandomPrefab(walls);
+                localPos = new Vector3((roomHeight / 2) * wallSize.x, j * wallSize.y, -i * wallSize.x);
+                pos = transform.TransformPoint(localPos);
+                rot = transform.rotation * Quaternion.Euler(0, 90, 0);
+                GameObject prefab = (doorPosY != 0 && i == doorPosY && j < 1) ? GetRandomPrefab(doors) : GetRandomPrefab(walls);
                 Instantiate(prefab, pos, rot, wallsParent);
             }
 
-            pos = new Vector3((roomHeight / 2) * wallSize.x, j * wallSize.y, -(roomWidth / 2) * wallSize.y);
-            rot = Quaternion.Euler(0, -90, 0);
+            localPos = new Vector3((roomHeight / 2) * wallSize.x, j * wallSize.y, -(roomWidth / 2) * wallSize.y);
+            pos = transform.TransformPoint(localPos);
+            rot = transform.rotation * Quaternion.Euler(0, -90, 0);
             Instantiate(GetRandomPrefab(wallHalves), pos, rot, wallsParent);
         }
     }
+
 
     void CreateFoundation()
     {
         for (int y = 0; y < roomWidth; y++)
         {
-            Vector3 pos = new Vector3(tileOffset.x, -2, -y * tileSize.y + tileOffset.y);
-            Instantiate(floorFoundation, pos, Quaternion.identity, foundationParent);
+            Vector3 localPos = new Vector3(tileOffset.x, -2, -y * tileSize.y + tileOffset.y);
+            Vector3 pos = transform.TransformPoint(localPos);
+            Quaternion rot = transform.rotation;
+            Instantiate(floorFoundation, pos, rot, foundationParent);
         }
 
         for (int x = 1; x < roomHeight; x++)
         {
-            Vector3 pos = new Vector3(x * tileSize.x + tileOffset.x, -2, -(roomWidth - 1) * tileSize.y + tileOffset.y);
-            Instantiate(floorFoundation, pos, Quaternion.identity, foundationParent);
+            Vector3 localPos = new Vector3(x * tileSize.x + tileOffset.x, -2, -(roomWidth - 1) * tileSize.y + tileOffset.y);
+            Vector3 pos = transform.TransformPoint(localPos);
+            Quaternion rot = transform.rotation;
+            Instantiate(floorFoundation, pos, rot, foundationParent);
         }
     }
+
 
     GameObject GetRandomPrefab(List<GameObject> list)
     {

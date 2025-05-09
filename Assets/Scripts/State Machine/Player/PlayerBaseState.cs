@@ -29,7 +29,9 @@ public abstract class PlayerBaseState : State
     }
     protected Vector3 CalculatMovmentDiractionByMouse()
     {
+        Debug.Log(Camera.main);
         if (Camera.main == null) return Vector3.zero;
+
 
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, stateMachine.transform.position);

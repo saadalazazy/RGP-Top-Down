@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2234291530440067178}
   - component: {fileID: 2374335457392588064}
   - component: {fileID: 6488908285154685063}
-  - component: {fileID: 2188413935428628223}
+  - component: {fileID: 5064757331583690358}
   m_Layer: 0
   m_Name: floor_tile_large_rocks
   m_TagString: Untagged
@@ -84,7 +84,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &2188413935428628223
+--- !u!65 &5064757331583690358
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4, y: 0.6361743, z: 4}
-  m_Center: {x: 0, y: 0.21808684, z: 0}
+  m_Size: {x: 2, y: 0.15000033, z: 2}
+  m_Center: {x: 0, y: -0.025000002, z: 0}
