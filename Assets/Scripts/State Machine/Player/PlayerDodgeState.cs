@@ -13,6 +13,7 @@ public class PlayerDodgeState : PlayerBaseState
         movment = CalculateMovmentDiraction();
         remaningTime = stateMachine.Dodge.Time;
         stateMachine.Animator.CrossFadeInFixedTime(AnimationDodgeName, 0.1f);
+        stateMachine.Effects.PlayPlayerDashVfx();
     }
     public override void Tick(float deltaTime)
     {

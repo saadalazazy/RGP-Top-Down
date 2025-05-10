@@ -47,6 +47,7 @@ public class PlayerMovmentState : PlayerBaseState
 
     void OnDodge()
     {
+        if (stateMachine.InputManager.MovmentValue == Vector2.zero) return;
         stateMachine.SwitchStateTo(new PlayerDodgeState(stateMachine));
     }
 }

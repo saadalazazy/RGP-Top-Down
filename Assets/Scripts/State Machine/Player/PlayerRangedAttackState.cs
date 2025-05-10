@@ -20,6 +20,7 @@ public class PlayerRangedAttackState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         Vector3 movmentDir;
+        Vector3 lastMovementDir;
         if (mouseUse)
         {
             movmentDir = CalculatMovmentDiractionByMouse();
@@ -28,7 +29,6 @@ public class PlayerRangedAttackState : PlayerBaseState
         {
             movmentDir = CalculateMovmentDiraction();
         }
-
         if (!stateMachine.InputManager.IsAming)
         {
             stateMachine.SwitchStateTo(new PlayerMovmentState(stateMachine));
@@ -38,9 +38,10 @@ public class PlayerRangedAttackState : PlayerBaseState
             stateMachine.Animator.CrossFadeInFixedTime(AnimationShootName, 0.1f);
             stateMachine.ForceReceiver.AddForce(-stateMachine.transform.forward * stateMachine.ArrowFireHandler.impact);
         }
-
+        if (stateMachine.InputManager.MovmentValue == Vector2.zero && !mouseUse) return;
+        lastMovementDir = movmentDir;
         Move(Vector3.zero, deltaTime);
-        FaceMovementDirection(movmentDir, deltaTime);
+        FaceMovementDirection(lastMovementDir, deltaTime);
     }
 
     public override void Exit()
