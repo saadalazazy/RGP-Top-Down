@@ -16,6 +16,7 @@ public class RoomGenerator : MonoBehaviour
     [SerializeField] bool makeFloor;
     [SerializeField] bool makeWall;
     [SerializeField] bool makeFoundation;
+    [SerializeField] bool notRotation;
 
     [Header("Prefab Lists (Randomized)")]
     public List<GameObject> tiles;
@@ -89,7 +90,11 @@ public class RoomGenerator : MonoBehaviour
             {
                 Vector3 localPos = new Vector3(x * tileSize.x + tileOffset.x, 0, -y * tileSize.y + tileOffset.y);
                 Vector3 pos = transform.TransformPoint(localPos);
-                Quaternion rot = transform.rotation * GetRandomRotation(); // Also apply generator rotation
+                Quaternion rot;
+                if (!notRotation)
+                    rot = transform.rotation * GetRandomRotation(); 
+                else
+                    rot = Quaternion.identity;
                 Instantiate(GetRandomPrefab(tiles), pos, rot, floorParent).name = $"Tile_{x}_{y}";
             }
         }

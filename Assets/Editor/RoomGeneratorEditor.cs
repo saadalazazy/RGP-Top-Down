@@ -16,6 +16,7 @@ public class RoomGeneratorEditor : Editor
     SerializedProperty makeFloor;
     SerializedProperty makeWall;
     SerializedProperty makeFoundation;
+    SerializedProperty notRotation;
 
     SerializedProperty tiles;
     SerializedProperty walls;
@@ -44,6 +45,7 @@ public class RoomGeneratorEditor : Editor
         makeFloor = serializedObject.FindProperty("makeFloor");
         makeWall = serializedObject.FindProperty("makeWall");
         makeFoundation = serializedObject.FindProperty("makeFoundation");
+        notRotation = serializedObject.FindProperty("notRotation");
 
         tiles = serializedObject.FindProperty("tiles");
         walls = serializedObject.FindProperty("walls");
@@ -78,6 +80,7 @@ public class RoomGeneratorEditor : Editor
             EditorGUILayout.PropertyField(makeFloor);
             EditorGUILayout.PropertyField(makeWall);
             EditorGUILayout.PropertyField(makeFoundation);
+            EditorGUILayout.PropertyField(notRotation);
             EditorGUI.indentLevel--;
         }
 

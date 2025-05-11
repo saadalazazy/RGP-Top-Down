@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour
     private readonly int Attack = Animator.StringToHash("Attack");
     private readonly int Death = Animator.StringToHash("Death");
     private readonly int Hit = Animator.StringToHash("Hit");
+    private readonly int IdleCombat = Animator.StringToHash("IdleCombat");
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -156,6 +158,7 @@ public class Enemy : MonoBehaviour
     private IEnumerator DelayBforeAttacking()
     {
         animator.SetFloat(MomvmentSpeed, 0f);
+        animator.CrossFadeInFixedTime(IdleCombat, 0.1f);
         yield return new WaitForSeconds(delayBeforeAttack);
         animator.CrossFadeInFixedTime(Attack, 0.1f);
     }
