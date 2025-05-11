@@ -5,7 +5,7 @@ using UnityEngine;
 public class ArrowFireHandler : MonoBehaviour
 {
     [SerializeField] Transform ShootingPoint;
-    [SerializeField] Transform Player;
+    [SerializeField] Transform Character;
     [SerializeField] GameObject arrow;
     [SerializeField] public float impact;
     public float delay;
@@ -20,7 +20,7 @@ public class ArrowFireHandler : MonoBehaviour
     IEnumerator ShootingArrowDelay()
     {
         canShoot = false;
-        Instantiate(arrow, ShootingPoint.position, Player.rotation);
+        Instantiate(arrow, ShootingPoint.position, Character.rotation);
         yield return new WaitForSeconds(delay);
         canShoot = true;
     }

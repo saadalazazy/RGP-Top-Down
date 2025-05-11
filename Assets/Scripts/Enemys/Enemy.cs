@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
     private Vector3 impact = Vector3.zero;
     [SerializeField] private float impactDamping = 5f;
     [SerializeField] private float hitImpactForce = 5f;
-
+    private Coroutine attackCoroutine;
 
     private readonly int MomvmentSpeed = Animator.StringToHash("speed");
     private readonly int MovmentBlendtree = Animator.StringToHash("MovmentBlendTree");
@@ -75,6 +75,7 @@ public class Enemy : MonoBehaviour
     void CalculateEnemyMovement()
     {
         float distance = Vector3.Distance(targetPlayer.position, transform.position);
+        float distanceRange = Vector3.Distance(spawnPosition, transform.position);
 
         if (distance > range)
         {
@@ -114,16 +115,16 @@ public class Enemy : MonoBehaviour
             case EnemyState.BeingHit:
                 break;
         }
-        StopAllCoroutines();
         switch (newState)
         {
             case EnemyState.Normal:
                 animator.CrossFadeInFixedTime(MovmentBlendtree, 0.1f);
                 break;
             case EnemyState.Attacking:
-                StartCoroutine(DelayBforeAttacking());
+                attackCoroutine = StartCoroutine(DelayBforeAttacking());
                 break;
             case EnemyState.Dead:
+                StopCoroutine(attackCoroutine);
                 animator.CrossFadeInFixedTime(Death, 0.1f);
                 break;
             case EnemyState.BeingHit:
