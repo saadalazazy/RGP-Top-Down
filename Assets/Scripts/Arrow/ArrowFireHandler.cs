@@ -22,7 +22,10 @@ public class ArrowFireHandler : MonoBehaviour
         if(ArrowCount > 0)
             ArrowCount--;
     }
-
+    public void IncreaseArrowCount(int count)
+    {
+        ArrowCount+= count;
+    }
     IEnumerator ShootingArrowDelay()
     {
         canShoot = false;

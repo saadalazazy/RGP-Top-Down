@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
@@ -8,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
 {
     static public bool isDead = false;
     float heart;
-    [SerializeField] float maxHeart= 5;
+    [SerializeField] float maxHeart = 5;
     [field: HideInInspector] public float HitImpact { get; private set; }
     [field: HideInInspector] public Vector3 LastHitDir { get; private set; }
 
@@ -19,11 +20,12 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] Color flashColor = Color.white;
     [SerializeField] float flashDuration = 0.05f;
     [SerializeField] int flashRepeat = 1;
+    [SerializeField] PlayerEffects playerEffects;
     private List<Material> materialInstances = new List<Material>();
     private static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor");
-    
+
     private NavMeshAgent agent;
-    
+
     private void Start()
     {
         heart = maxHeart;
@@ -40,9 +42,9 @@ public class PlayerHealth : MonoBehaviour
             }
         }
     }
-    public void DecreaseHeart(float damage , Vector3 hitDir , float hitImpact)
+    public void DecreaseHeart(float damage, Vector3 hitDir, float hitImpact)
     {
-        //if (heart <= 0) return;
+        if (heart <= 0) return;
 
         heart = Mathf.Max(heart - damage, 0);
         StartCoroutine(FlashHitEffect());
@@ -73,5 +75,10 @@ public class PlayerHealth : MonoBehaviour
 
             yield return new WaitForSeconds(flashDuration);
         }
+    }
+
+    public void IncreasHeart(int hearts)
+    {
+        heart += hearts;
     }
 }

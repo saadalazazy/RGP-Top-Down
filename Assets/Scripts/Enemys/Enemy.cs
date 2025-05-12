@@ -79,6 +79,7 @@ public class Enemy : MonoBehaviour
                 return;
 
             case EnemyState.BeingHit:
+                //at the study CalculateDistance();
                 break;
         }
         if (PlayerHealth.isDead)
@@ -115,6 +116,14 @@ public class Enemy : MonoBehaviour
         animator.SetFloat(MomvmentSpeed, currentSpeed, 0.1f, Time.deltaTime);
     }
 
+    void CalculateDistance()
+    {
+        float distance = Vector3.Distance(targetPlayer.position, transform.position);
+        if (distance <= stoppingDistance)
+        {
+            SwitchStateTo(EnemyState.Attacking);
+        }
+    }
 
     void RotateTowardsPlayer()
     {

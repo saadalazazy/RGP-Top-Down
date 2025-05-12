@@ -9,6 +9,8 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
     public bool IsAming { get; private set; }
     public bool IsMouseUse { get; private set; } = false;
 
+    public bool IsInterAct { get; private set; } = false;
+
     public event Action DodgeEvent;
 
     Controls controls;
@@ -76,6 +78,20 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public void OnDodge(InputAction.CallbackContext context)
     {
+        if (!context.performed) return;
         DodgeEvent?.Invoke();
+    }
+
+
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            IsInterAct = true;
+        }
+        else if (context.canceled)
+        {
+            IsInterAct = false;
+        }
     }
 }
