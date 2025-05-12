@@ -14,6 +14,18 @@ public class WeaponHandelar : MonoBehaviour
     {
         weaponLogic1?.SetActive(true);
     }
+    public void EnableWeaponTwo()
+    {
+        weaponLogic2?.SetActive(true);
+    }
+    public void DisableOneWeapon() 
+    {
+        weaponLogic1?.SetActive(false);
+    }
+    public void DisableWeaponTwo() 
+    {
+        weaponLogic2?.SetActive(false);
+    }
     public void EnableTwoWeapon() 
     {
         weaponLogic1?.SetActive(true);

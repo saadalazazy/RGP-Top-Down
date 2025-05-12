@@ -19,6 +19,7 @@ public class PlayerEffects : MonoBehaviour
         StartCoroutine(ReturnToParentAfterDelay(1f));
     }
 
+
     private IEnumerator ReturnToParentAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);

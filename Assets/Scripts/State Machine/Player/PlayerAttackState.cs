@@ -16,6 +16,8 @@ public class PlayerAttackState : PlayerBaseState
     public override void Enter()
     {
         stateMachine.Animator.CrossFadeInFixedTime(attack.AnimationName, attack.TransitionDuration);
+        if(stateMachine.InputManager.IsMouseUse)
+            FaceMovementDirection(CalculatMovmentDiractionByMouse(), 10);
     }
     public override void Tick(float deltaTime)
     {

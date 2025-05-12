@@ -19,6 +19,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float rotationSmoothSpeedEnemy;
     [SerializeField] private float stoppingDistance;
     [SerializeField] private float range;
+    [SerializeField] private float spawnRange;
     [SerializeField] private float coolDownAttack;
     [SerializeField] private float delayBeforeAttack;
     #endregion
@@ -26,10 +27,11 @@ public class Enemy : MonoBehaviour
     #region States
     public enum EnemyState
     {
-        Normal, Attacking, Dead, BeingHit
+        Intro,Awake,Normal, Attacking, Dead, BeingHit
     }
 
     [SerializeField] private EnemyState currentEnemyState;
+    [SerializeField] public EnemyState lastEnemyState;  
     #endregion
     private Vector3 impact = Vector3.zero;
     [SerializeField] private float impactDamping = 5f;
@@ -42,14 +44,17 @@ public class Enemy : MonoBehaviour
     private readonly int Death = Animator.StringToHash("Death");
     private readonly int Hit = Animator.StringToHash("Hit");
     private readonly int IdleCombat = Animator.StringToHash("IdleCombat");
+    private readonly int Intro = Animator.StringToHash("Intro");
 
+    CapsuleCollider capsulCollider;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        capsulCollider = GetComponent<CapsuleCollider>();
         spawnPosition = transform.position;
         agent.speed = moveSpeed;
         agent.stoppingDistance = stoppingDistance;
-        SwitchStateTo(EnemyState.Normal);
+        SwitchStateTo(currentEnemyState);
     }
 
     private void Update()
@@ -58,6 +63,10 @@ public class Enemy : MonoBehaviour
         impact = Vector3.Lerp(impact, Vector3.zero, impactDamping * Time.deltaTime);
         switch (currentEnemyState)
         {
+            case EnemyState.Intro:
+                break;
+            case EnemyState.Awake: 
+                break;   
             case EnemyState.Normal:
                 CalculateEnemyMovement();
                 break;
@@ -72,6 +81,8 @@ public class Enemy : MonoBehaviour
             case EnemyState.BeingHit:
                 break;
         }
+        if (PlayerHealth.isDead)
+            SwitchStateTo(EnemyState.Normal);
     }
 
     void CalculateEnemyMovement()
@@ -79,18 +90,25 @@ public class Enemy : MonoBehaviour
         float distance = Vector3.Distance(targetPlayer.position, transform.position);
         float distanceRange = Vector3.Distance(spawnPosition, transform.position);
 
-        if (distance > range)
+        if(distanceRange > spawnRange || PlayerHealth.isDead)
         {
             agent.SetDestination(spawnPosition);
         }
-        else if (distance >= stoppingDistance)
-        {
-            agent.SetDestination(targetPlayer.position);
-        }
         else
         {
-            agent.ResetPath();
-            SwitchStateTo(EnemyState.Attacking);
+            if (distance > range)
+            {
+                agent.SetDestination(spawnPosition);
+            }
+            else if (distance >= stoppingDistance)
+            {
+                agent.SetDestination(targetPlayer.position);
+            }
+            else
+            {
+                agent.ResetPath();
+                SwitchStateTo(EnemyState.Attacking);
+            }
         }
 
         float currentSpeed = agent.velocity.magnitude;
@@ -108,6 +126,10 @@ public class Enemy : MonoBehaviour
 
         switch (currentEnemyState)
         {
+            case EnemyState.Intro:
+                break;
+            case EnemyState.Awake:
+                break;
             case EnemyState.Normal:
                 break;
             case EnemyState.Attacking:
@@ -119,14 +141,25 @@ public class Enemy : MonoBehaviour
         }
         switch (newState)
         {
+            case EnemyState.Intro:
+                break;
+            case EnemyState.Awake:
+                capsulCollider.enabled = true;
+                animator.CrossFadeInFixedTime(Intro, 0.1f);
+                break;
             case EnemyState.Normal:
+                if (attackCoroutine != null)
+                    StopCoroutine(attackCoroutine);
                 animator.CrossFadeInFixedTime(MovmentBlendtree, 0.1f);
                 break;
             case EnemyState.Attacking:
+                if (attackCoroutine != null)
+                    StopCoroutine(attackCoroutine);
                 attackCoroutine = StartCoroutine(DelayBforeAttacking());
                 break;
             case EnemyState.Dead:
-                StopCoroutine(attackCoroutine);
+                if(attackCoroutine != null)
+                    StopCoroutine(attackCoroutine);
                 animator.CrossFadeInFixedTime(Death, 0.1f);
                 break;
             case EnemyState.BeingHit:
@@ -137,17 +170,30 @@ public class Enemy : MonoBehaviour
 
         currentEnemyState = newState;
     }
-
+    public void SwitchToAwakeState()
+    {
+        SwitchStateTo(EnemyState.Awake);
+    }
+    public void SwitchToLastCurrentState()
+    {
+        if(lastEnemyState == EnemyState.Normal || lastEnemyState == EnemyState.Attacking)
+            SwitchStateTo(lastEnemyState);
+        else
+            SwitchStateTo(EnemyState.Normal);
+    }
     public void DelaySwitchStateNormal()
     {
         StartCoroutine(DelaySwitchToState(coolDownAttack, EnemyState.Normal));
     }
+
     public void SwitchToDeadState()
     {
         SwitchStateTo(EnemyState.Dead);
     }
     public void SwitchToHitState()
     {
+        agent.ResetPath();
+        lastEnemyState = currentEnemyState;
         SwitchStateTo(EnemyState.BeingHit);
     }
     private IEnumerator DelaySwitchToState(float delay, EnemyState enemyState)
@@ -167,5 +213,13 @@ public class Enemy : MonoBehaviour
         direction.Normalize();
         direction.y = 0;
         impact += direction * force;
+    }
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, range);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(spawnPosition != Vector3.zero ? spawnPosition : transform.position, spawnRange); // Spawn patrol range
     }
 }

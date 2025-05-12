@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public class Health : MonoBehaviour
@@ -16,14 +17,16 @@ public class Health : MonoBehaviour
     [SerializeField] float flashDuration = 0.05f;
     [SerializeField] int flashRepeat = 1;
     [SerializeField] Collider collider;
+
     private List<Material> materialInstances = new List<Material>();
     private static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor");
-
+    private NavMeshAgent agent;
+    float hitStopTime = 0.25f;
 
     private void Start()
     {
         health = maxHealth;
-
+        agent = GetComponent<NavMeshAgent>();
         Renderer[] renderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer rend in renderers)
         {
@@ -48,9 +51,12 @@ public class Health : MonoBehaviour
             OnDeath?.Invoke();
             Debug.Log(gameObject.transform + " dead");
             collider.enabled = false;
+            agent.enabled = false;
+            StartCoroutine(HitStop());
             return;
         }
         OnHit?.Invoke();
+        CinemaMahchineShake.instance.ShakeCamera(1,0.2f);
     }
 
     private IEnumerator FlashHitEffect()
@@ -67,5 +73,11 @@ public class Health : MonoBehaviour
 
             yield return new WaitForSeconds(flashDuration);
         }
+    }
+    private IEnumerator HitStop()
+    {
+        Time.timeScale = 0;
+        yield return new WaitForSecondsRealtime(hitStopTime);
+        Time.timeScale = 1;
     }
 }

@@ -8,6 +8,7 @@ public class ArrowFireHandler : MonoBehaviour
     [SerializeField] Transform Character;
     [SerializeField] GameObject arrow;
     [SerializeField] public float impact;
+    [field: SerializeField] public float ArrowCount { get; private set; }
     public float delay;
     public bool canShoot = true;
 
@@ -15,6 +16,11 @@ public class ArrowFireHandler : MonoBehaviour
     {
         if (canShoot)
             StartCoroutine(ShootingArrowDelay());
+    }
+    public void DcreaseArrowCount()
+    {
+        if(ArrowCount > 0)
+            ArrowCount--;
     }
 
     IEnumerator ShootingArrowDelay()

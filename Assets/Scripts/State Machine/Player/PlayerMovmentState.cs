@@ -26,7 +26,7 @@ public class PlayerMovmentState : PlayerBaseState
         }
         if (stateMachine.InputManager.IsAttacking)
         {
-            stateMachine.Animator.SetFloat(MomvmentSpeed, 0, AnimatorDumpTime, 0.9f);
+            stateMachine.Animator.SetFloat(MomvmentSpeed, 0);
             stateMachine.SwitchStateTo(new PlayerAttackState(stateMachine, 0));
             return;
         }
@@ -48,6 +48,8 @@ public class PlayerMovmentState : PlayerBaseState
     void OnDodge()
     {
         if (stateMachine.InputManager.MovmentValue == Vector2.zero) return;
+        if (Time.time - stateMachine.previousDodgeTime < stateMachine.Dodge.CoolDown) return;
+        stateMachine.SetDodgeTime();
         stateMachine.SwitchStateTo(new PlayerDodgeState(stateMachine));
     }
 }

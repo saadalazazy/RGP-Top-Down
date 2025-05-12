@@ -33,10 +33,12 @@ public class PlayerRangedAttackState : PlayerBaseState
         {
             stateMachine.SwitchStateTo(new PlayerMovmentState(stateMachine));
         }
-        if(stateMachine.InputManager.IsAttacking && stateMachine.ArrowFireHandler.canShoot)
+        if(stateMachine.InputManager.IsAttacking && stateMachine.ArrowFireHandler.canShoot 
+            && stateMachine.ArrowFireHandler.ArrowCount > 0)
         {
             stateMachine.Animator.CrossFadeInFixedTime(AnimationShootName, 0.1f);
             stateMachine.ForceReceiver.AddForce(-stateMachine.transform.forward * stateMachine.ArrowFireHandler.impact);
+            stateMachine.ArrowFireHandler.DcreaseArrowCount();
         }
         if (stateMachine.InputManager.MovmentValue == Vector2.zero && !mouseUse) return;
         lastMovementDir = movmentDir;
