@@ -29,11 +29,11 @@ public class PlayerInteract : MonoBehaviour
                 Debug.Log("Hit: " + hit.collider.name);
                 if (hit.collider.TryGetComponent<Door>(out Door door))
                 {
-                    if (pickup.KeyCount > 0)
+                    if (pickup.KeyCount >= door.numKeyRequirment)
                     {
                         Debug.Log("Opening door");
                         door.OpenDoor();
-                        pickup.DecreaseKeyCount();
+                        pickup.DecreaseKeyCount(pickup.KeyCount);
                     }
                     else
                     {

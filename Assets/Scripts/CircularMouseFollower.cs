@@ -25,13 +25,13 @@ public class CircularMouseFollower : MonoBehaviour
         {
             Vector3 targetPos = hit.point;
 
-            Vector3 direction = targetPos - initialPosition;
+            Vector3 direction = targetPos - transform.position;
             direction.y = 0f;
 
             if (direction.magnitude > maxRange)
                 direction = direction.normalized * maxRange;
 
-            Vector3 desiredPosition = initialPosition + direction;
+            Vector3 desiredPosition = transform.position + direction;
 
             transform.position = Vector3.Lerp(transform.position, desiredPosition, Time.deltaTime * movementSpeed);
         }

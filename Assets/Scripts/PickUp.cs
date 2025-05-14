@@ -36,10 +36,10 @@ public class PickUp : MonoBehaviour
         }
     }
 
-    public void DecreaseKeyCount()
+    public void DecreaseKeyCount(int numKey)
     {
         if(KeyCount > 0)
-            KeyCount--;
+            KeyCount-= numKey;
     }
 
 }

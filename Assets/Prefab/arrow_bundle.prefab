@@ -101,7 +101,7 @@ MonoBehaviour:
   rotationSpeed: {x: 0, y: 100, z: 0}
   floatAmplitude: 0.5
   floatFrequency: 1
-  ArrowCountInBundel: 0
+  ArrowCountInBundel: 3
 --- !u!135 &309193877224924524
 SphereCollider:
   m_ObjectHideFlags: 0

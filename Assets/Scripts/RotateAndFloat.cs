@@ -10,12 +10,12 @@ public class RotateAndFloat : MonoBehaviour
 
     private Vector3 startPosition;
 
-    void Start()
+    protected virtual void Start()
     {
         startPosition = transform.position;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         transform.Rotate(rotationSpeed * Time.deltaTime);
 

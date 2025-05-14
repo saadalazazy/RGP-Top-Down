@@ -28,7 +28,6 @@ public abstract class PlayerBaseState : State
     }
     protected Vector3 CalculatMovmentDiractionByMouse()
     {
-        Debug.Log(Camera.main);
         if (Camera.main == null) return Vector3.zero;
 
 

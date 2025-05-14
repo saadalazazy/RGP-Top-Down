@@ -8,8 +8,8 @@ using UnityEngine.Rendering;
 public class Enemy : MonoBehaviour
 {
     #region Player
-    [SerializeField] private Transform targetPlayer;
-    [SerializeField] private Animator animator;
+    private Transform targetPlayer;
+    private Animator animator;
     [SerializeField] private float moveSpeed;
     #endregion
 
@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float impactDamping = 5f;
     [SerializeField] private float hitImpactForce = 5f;
     private Coroutine attackCoroutine;
+    private bool canHit = true;
 
     private readonly int MomvmentSpeed = Animator.StringToHash("speed");
     private readonly int MovmentBlendtree = Animator.StringToHash("MovmentBlendTree");
@@ -47,10 +48,14 @@ public class Enemy : MonoBehaviour
     private readonly int Intro = Animator.StringToHash("Intro");
 
     CapsuleCollider capsulCollider;
-    private void Start()
+
+    [SerializeField] GameObject dropItem;
+    private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         capsulCollider = GetComponent<CapsuleCollider>();
+        animator = GetComponent<Animator>();
+        targetPlayer = GameObject.FindWithTag("Player").transform;
         spawnPosition = transform.position;
         agent.speed = moveSpeed;
         agent.stoppingDistance = stoppingDistance;
@@ -59,6 +64,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(canHit);
         if (agent.enabled) agent.Move(impact * Time.deltaTime);
         impact = Vector3.Lerp(impact, Vector3.zero, impactDamping * Time.deltaTime);
         switch (currentEnemyState)
@@ -79,7 +85,6 @@ public class Enemy : MonoBehaviour
                 return;
 
             case EnemyState.BeingHit:
-                //at the study CalculateDistance();
                 break;
         }
         if (PlayerHealth.isDead)
@@ -90,10 +95,17 @@ public class Enemy : MonoBehaviour
     {
         float distance = Vector3.Distance(targetPlayer.position, transform.position);
         float distanceRange = Vector3.Distance(spawnPosition, transform.position);
-
-        if(distanceRange > spawnRange || PlayerHealth.isDead)
+        float playerDistance = Vector3.Distance(targetPlayer.position, spawnPosition);
+        if(playerDistance > spawnRange)
         {
             agent.SetDestination(spawnPosition);
+            return;
+        }
+
+        if (distanceRange > spawnRange || PlayerHealth.isDead)
+        {
+            agent.SetDestination(spawnPosition);
+            return;
         }
         else
         {
@@ -132,7 +144,6 @@ public class Enemy : MonoBehaviour
     }
     public void SwitchStateTo(EnemyState newState)
     {
-
         switch (currentEnemyState)
         {
             case EnemyState.Intro:
@@ -153,12 +164,13 @@ public class Enemy : MonoBehaviour
             case EnemyState.Intro:
                 break;
             case EnemyState.Awake:
-                capsulCollider.enabled = true;
                 animator.CrossFadeInFixedTime(Intro, 0.1f);
                 break;
             case EnemyState.Normal:
+                capsulCollider.enabled = true;
                 if (attackCoroutine != null)
                     StopCoroutine(attackCoroutine);
+                canHit = true;
                 animator.CrossFadeInFixedTime(MovmentBlendtree, 0.1f);
                 break;
             case EnemyState.Attacking:
@@ -167,6 +179,8 @@ public class Enemy : MonoBehaviour
                 attackCoroutine = StartCoroutine(DelayBforeAttacking());
                 break;
             case EnemyState.Dead:
+                if (dropItem != null)
+                    Instantiate(dropItem, transform.position + new Vector3(0, 0.5f, 1), Quaternion.identity);
                 if(attackCoroutine != null)
                     StopCoroutine(attackCoroutine);
                 animator.CrossFadeInFixedTime(Death, 0.1f);
@@ -201,6 +215,7 @@ public class Enemy : MonoBehaviour
     }
     public void SwitchToHitState()
     {
+        if(!canHit) return;
         agent.ResetPath();
         lastEnemyState = currentEnemyState;
         SwitchStateTo(EnemyState.BeingHit);
@@ -216,6 +231,7 @@ public class Enemy : MonoBehaviour
         animator.CrossFadeInFixedTime(IdleCombat, 0.1f);
         yield return new WaitForSeconds(delayBeforeAttack);
         animator.CrossFadeInFixedTime(Attack, 0.1f);
+        canHit = false;
     }
     public void AddImpact(Vector3 direction, float force)
     {
