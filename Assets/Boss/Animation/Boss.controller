@@ -59,7 +59,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Spellcast_Summon
+  m_Name: SpellcastSummon
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -138,8 +138,8 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attacking_2
-  m_Speed: 1
+  m_Name: AttackingSpinning
+  m_Speed: 2
   m_CycleOffset: 0
   m_Transitions: []
   m_StateMachineBehaviours: []
@@ -451,7 +451,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attacking_3
+  m_Name: AttackingJumpChop
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -503,7 +503,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Attacking_1
+  m_Name: AttackingSlice
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
