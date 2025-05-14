@@ -13,6 +13,9 @@ public class BossAttackData : ScriptableObject
 
     public float delayBeforeAttack;
     public float delayAfterAttack;
+    public bool followPlayer;
 
+    public bool rotateOnly;
+    public bool returnToSpawn;
     [HideInInspector] public int AttackAnimationHash => Animator.StringToHash(attackAnimationName);
 }

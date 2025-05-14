@@ -13,8 +13,11 @@ MonoBehaviour:
   m_Name: BossAttack 2
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  rotationSpeed: 5
+  rotationSpeed: 100
   stoppingDistance: 2
   attackAnimationName: AttackingJumpChop
-  delayBeforeAttack: 0
-  delayAfterAttack: 0
+  delayBeforeAttack: 1
+  delayAfterAttack: 3
+  followPlayer: 1
+  rotateOnly: 1
+  returnToSpawn: 0

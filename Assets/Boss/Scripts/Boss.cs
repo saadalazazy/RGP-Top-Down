@@ -7,7 +7,6 @@ public class Boss : MonoBehaviour
 {
     [SerializeField] BossAttackData[] attackData;
 
-
     private Transform targetPlayer;
     private Animator animator;
     private NavMeshAgent agent;
@@ -24,22 +23,20 @@ public class Boss : MonoBehaviour
 
     private readonly int IdleCombatAnimationHash = Animator.StringToHash("Idle");
     private readonly int RunningAnimationHash = Animator.StringToHash("Running");
+    private bool isAttackingCycleRunning = false;
 
 
     public enum BossState
     {
         Idle,Movement,Attacking
     }
-    public enum AttackState
-    {
-        Attacking_1, Attacking_2, Attacking_3, Attacking_4
-    }
+    private int currentAttackIndex;
+    private BossAttackData CurrentAttackData => attackData[currentAttackIndex];
     public enum lifeState
     {
         Intro, Awake,
         Dead
     }
-    [SerializeField] public AttackState currentAttackState;
 
     [SerializeField] private BossState currentBossState;
     [SerializeField] private BossState lastBossState;
@@ -52,65 +49,25 @@ public class Boss : MonoBehaviour
         animator = GetComponent<Animator>();
         targetPlayer = GameObject.FindGameObjectWithTag("Player").transform;
         spawnPosition = transform.position;
-        SwitchAttackStateTo(currentAttackState);
+        currentAttackIndex = 0;
+        SwitchAttackStateTo(currentAttackIndex);
         SwitchStateTo(currentBossState);
     }
     private void Update()
     {
-        switch(currentAttackState)
+        if (currentBossState == BossState.Movement)
         {
-            case AttackState.Attacking_1:
-                switch (currentBossState)
-                {
-                    case BossState.Idle:
-                        break;
-                    case BossState.Movement:
-                        CalculateBossMovement();
-                        break;
-                    case BossState.Attacking:
-                        RotateTowardsPlayer();
-                        break;
-                }
-                break;
-            case AttackState.Attacking_2:
-                switch (currentBossState)
-                {
-                    case BossState.Idle:
-                        break;
-                    case BossState.Movement:
-                        CalculateBossMovement();
-                        break;
-                    case BossState.Attacking:
-                        BossFollowPlayer();
-                        break;
-                }
-                break;
-            case AttackState.Attacking_3:
-                switch (currentBossState)
-                {
-                    case BossState.Idle:
-                        break;
-                    case BossState.Movement:
-                        CalculateBossMovement();
-                        break;
-                    case BossState.Attacking:
-                        RotateTowardsPlayer();
-                        break;
-                }
-                break;
-            case AttackState.Attacking_4:
-                switch (currentBossState)
-                {
-                    case BossState.Idle:
-                        break;
-                    case BossState.Movement:
-                        CalculateBossMovement();
-                        break;
-                    case BossState.Attacking:
-                        RotateTowardsPlayer();
-                        break;
-                }
-                break;
+            if (CurrentAttackData.returnToSpawn)
+                BossGoToSpawnPoint();
+            else
+                CalculateBossMovement();
+        }
+        else if (currentBossState == BossState.Attacking)
+        {
+            if (CurrentAttackData.followPlayer)
+                BossFollowPlayer();
+            else if (CurrentAttackData.rotateOnly)
+                RotateTowardsPlayer();
         }
     }
     void RotateTowardsPlayer()
@@ -122,7 +79,17 @@ public class Boss : MonoBehaviour
     {
         agent.SetDestination(targetPlayer.position);
     }
-    
+    void BossGoToSpawnPoint()
+    {
+        float distance = Vector3.Distance(spawnPosition, transform.position);
+        agent.SetDestination(spawnPosition);
+        if (distance < stoppingDistance && !isAttackingCycleRunning)
+        {
+            agent.ResetPath();
+            SwitchStateTo(BossState.Attacking);
+        }
+    }
+
     void CalculateBossMovement()
     {
         float distance = Vector3.Distance(targetPlayer.position, transform.position);
@@ -133,55 +100,78 @@ public class Boss : MonoBehaviour
         else
         {
             agent.SetDestination(targetPlayer.position);
-            if(distance < stoppingDistance)
+            if (distance < stoppingDistance && !isAttackingCycleRunning)
             {
                 agent.ResetPath();
-                SwitchStateTo(BossState.Attacking);
+                StartCoroutine(DelayBeforeAttacking());
             }
         }
     }
 
     public void SwitchStateTo(BossState newState)
     {
-        switch (currentBossState)
-        {
-            case BossState.Movement:
-                break;
-            case BossState.Attacking:
-                break;
-            case BossState.Idle:
-                break;
-        }
+        if (currentBossState == newState) return;
+
         lastBossState = currentBossState;
+        currentBossState = newState;
+
         switch (newState)
         {
             case BossState.Movement:
                 animator.CrossFadeInFixedTime(RunningAnimationHash, 0.1f);
-                int indexRange = Random.RandomRange(0, attackData.Length);
-                SwitchAttackStateTo((AttackState)indexRange);
+                int randomIndex = Random.Range(0, attackData.Length);
+                SwitchAttackStateTo(randomIndex);
                 break;
+
             case BossState.Attacking:
                 animator.CrossFadeInFixedTime(AttackAnimationHash, 0.1f);
                 break;
+
             case BossState.Idle:
+                agent.ResetPath();
                 animator.CrossFadeInFixedTime(IdleCombatAnimationHash, 0.1f);
                 break;
         }
-        currentBossState = newState;
     }
-    public void SwitchAttackStateTo(AttackState newState)
+
+    public void SwitchAttackStateTo(int newIndex)
     {
-        int indexBossAttack = (int)newState;
-        BossAttackData newAttackData = attackData[indexBossAttack];
+        if (newIndex < 0 || newIndex >= attackData.Length) return;
+
+        BossAttackData newAttackData = attackData[newIndex];
+        currentAttackIndex = newIndex;
+
         moveSpeed = newAttackData.moveSpeed;
         rotationSpeed = newAttackData.rotationSpeed;
         stoppingDistance = newAttackData.stoppingDistance;
         AttackAnimationHash = newAttackData.AttackAnimationHash;
         delayAfterAttck = newAttackData.delayAfterAttack;
         delayBeforeAttck = newAttackData.delayBeforeAttack;
+
         agent.speed = moveSpeed;
         agent.stoppingDistance = stoppingDistance;
-        currentAttackState = newState;
     }
-    
+
+    IEnumerator DelayBeforeAttacking()
+    {
+        isAttackingCycleRunning = true;
+
+        SwitchStateTo(BossState.Idle);
+        yield return new WaitForSeconds(delayBeforeAttck);
+
+        SwitchStateTo(BossState.Attacking);
+    }
+    public void TriggerDelayAfterAttacking()
+    {
+        StartCoroutine(DelayAfterAttacking());
+    }
+
+    IEnumerator DelayAfterAttacking()
+    {
+        SwitchStateTo(BossState.Idle);
+        yield return new WaitForSeconds(delayAfterAttck);
+
+        SwitchStateTo(BossState.Movement);
+        isAttackingCycleRunning = false;
+    }
 }

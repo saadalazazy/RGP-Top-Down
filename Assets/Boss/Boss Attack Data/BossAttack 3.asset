@@ -16,5 +16,8 @@ MonoBehaviour:
   rotationSpeed: 5
   stoppingDistance: 10
   attackAnimationName: SpellcastSummon
-  delayBeforeAttack: 0
-  delayAfterAttack: 0
+  delayBeforeAttack: 1
+  delayAfterAttack: 4
+  followPlayer: 1
+  rotateOnly: 1
+  returnToSpawn: 0

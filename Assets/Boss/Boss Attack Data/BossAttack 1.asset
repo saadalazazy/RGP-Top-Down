@@ -16,5 +16,8 @@ MonoBehaviour:
   rotationSpeed: 0
   stoppingDistance: 5
   attackAnimationName: AttackingSpinning
-  delayBeforeAttack: 0
-  delayAfterAttack: 0
+  delayBeforeAttack: 1
+  delayAfterAttack: 1
+  followPlayer: 1
+  rotateOnly: 0
+  returnToSpawn: 0
