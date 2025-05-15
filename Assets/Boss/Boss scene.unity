@@ -8086,6 +8086,11 @@ PrefabInstance:
       propertyPath: maxHeart
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 1713179379521990390, guid: e8d90557512d77f4cb5b6f06c7370b29,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.49
+      objectReference: {fileID: 0}
     - target: {fileID: 1740160868673964323, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
       propertyPath: m_Lens.NearClipPlane
@@ -8149,12 +8154,12 @@ PrefabInstance:
     - target: {fileID: 6782575296447707049, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.935425
+      value: 20.137424
       objectReference: {fileID: 0}
     - target: {fileID: 6782575296447707049, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -15.999976
+      value: -15.999978
       objectReference: {fileID: 0}
     - target: {fileID: 6922557899958953863, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
@@ -8174,7 +8179,7 @@ PrefabInstance:
     - target: {fileID: 8407965301023457740, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 23.93542
+      value: 20.137417
       objectReference: {fileID: 0}
     - target: {fileID: 8407965301023457740, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
@@ -51475,7 +51480,7 @@ Transform:
   m_GameObject: {fileID: 1737948443}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 9.470001, y: 30.71542, z: -27.640003}
+  m_LocalPosition: {x: 9.470001, y: 26.917418, z: -27.640003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62477,6 +62482,7 @@ GameObject:
   - component: {fileID: 4926732060747718178}
   - component: {fileID: 368603290483800462}
   - component: {fileID: 7965530913249921700}
+  - component: {fileID: 7965530913249921701}
   m_Layer: 0
   m_Name: Skeleton_KIng
   m_TagString: Untagged
@@ -63018,19 +63024,7 @@ MonoBehaviour:
         m_CallState: 2
   OnHit:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Enemy, Assembly-CSharp
-        m_MethodName: SwitchToHitState
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   flashColor:
   - {r: 1, g: 1, b: 1, a: 0}
   - {r: 0.754717, g: 0, b: 0, a: 0}
@@ -63927,7 +63921,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackData:
-  - {fileID: 11400000, guid: dadba2cf2182b7948a53f7476068ace0, type: 2}
   - {fileID: 11400000, guid: 077ced80cb6aa2845b00c2d47002b784, type: 2}
   currentBossState: 1
   lastBossState: 0
@@ -63949,6 +63942,25 @@ MonoBehaviour:
   - {fileID: 4449557032852861424, guid: b0f7ce17a7fc09e40bddef7ed20f926a, type: 3}
   spawnCenterPoint: {fileID: 1766143168}
   spawnRadius: 10
+--- !u!114 &7965530913249921701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3803756578707423533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 610f2efc0a041334aaa387f025d6ccc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TargetPlayer: {fileID: 0}
+  fireCircle: {fileID: 8543479797018381106, guid: 534c25a632494384aaf1600f83773589,
+    type: 3}
+  fireAttack: {fileID: 7271756458426384964, guid: 9b1887600d369d34c82c497b1311cfce,
+    type: 3}
+  coolDownSpawn: 0
+  timeBetweenCircleAndFire: 1
 --- !u!1 &7978236279223808559
 GameObject:
   m_ObjectHideFlags: 0
