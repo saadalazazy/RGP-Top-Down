@@ -32,14 +32,15 @@ public class Boss : MonoBehaviour
     }
     private int currentAttackIndex;
     private BossAttackData CurrentAttackData => attackData[currentAttackIndex];
-    public enum lifeState
+    public enum LifeState
     {
-        Intro, Awake,
+        Intro, Awake,Normal,
         Dead
     }
 
     [SerializeField] private BossState currentBossState;
     [SerializeField] private BossState lastBossState;
+    [SerializeField] private LifeState currentLifeState;
 
 
     private void Start()
@@ -52,22 +53,35 @@ public class Boss : MonoBehaviour
         currentAttackIndex = 0;
         SwitchAttackStateTo(currentAttackIndex);
         SwitchStateTo(currentBossState);
+        currentLifeState = LifeState.Normal;
+
     }
     private void Update()
     {
-        if (currentBossState == BossState.Movement)
+        switch (currentLifeState)
         {
-            if (CurrentAttackData.returnToSpawn)
-                BossGoToSpawnPoint();
-            else
-                CalculateBossMovement();
-        }
-        else if (currentBossState == BossState.Attacking)
-        {
-            if (CurrentAttackData.followPlayer)
-                BossFollowPlayer();
-            else if (CurrentAttackData.rotateOnly)
-                RotateTowardsPlayer();
+            case LifeState.Intro:
+                break;
+            case LifeState.Awake:
+                break;
+            case LifeState.Normal:
+                if (currentBossState == BossState.Movement)
+                {
+                    if (CurrentAttackData.returnToSpawn)
+                        BossGoToSpawnPoint();
+                    else
+                        CalculateBossMovement();
+                }
+                else if (currentBossState == BossState.Attacking)
+                {
+                    if (CurrentAttackData.followPlayer)
+                        BossFollowPlayer();
+                    else if (CurrentAttackData.rotateOnly)
+                        RotateTowardsPlayer();
+                }
+                break;
+            case LifeState.Dead:
+                break;
         }
     }
     void RotateTowardsPlayer()
@@ -83,10 +97,12 @@ public class Boss : MonoBehaviour
     {
         float distance = Vector3.Distance(spawnPosition, transform.position);
         agent.SetDestination(spawnPosition);
-        if (distance < stoppingDistance && !isAttackingCycleRunning)
+        Debug.Log(distance + "go to spawn point");
+        if (distance < 1f && !isAttackingCycleRunning)
         {
             agent.ResetPath();
             SwitchStateTo(BossState.Attacking);
+            Debug.Log(distance + "innter to to air");
         }
     }
 
@@ -174,4 +190,13 @@ public class Boss : MonoBehaviour
         SwitchStateTo(BossState.Movement);
         isAttackingCycleRunning = false;
     }
+    public void SwitchLifeStateToDead()
+    {
+        currentLifeState = LifeState.Dead;
+        animator.Play("Death");
+        agent.ResetPath();
+        agent.speed = 0;
+        currentBossState = BossState.Idle;
+        StopAllCoroutines();
+    }    
 }

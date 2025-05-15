@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
     [SerializeField] UnityEvent OnHit;
 
     [Header("Hit Flash Settings")]
-    [SerializeField] Color flashColor = Color.white;
+    [SerializeField] Color[] flashColor;
     [SerializeField] float flashDuration = 0.05f;
     [SerializeField] int flashRepeat = 1;
     [SerializeField] Collider collider;
@@ -22,6 +22,8 @@ public class Health : MonoBehaviour
     private static readonly int EmissionColorID = Shader.PropertyToID("_EmissionColor");
     private NavMeshAgent agent;
     float hitStopTime = 0.25f;
+
+    [SerializeField] bool isBoss = false;
 
     private void Start()
     {
@@ -49,10 +51,11 @@ public class Health : MonoBehaviour
         if (health <= 0)
         {
             OnDeath?.Invoke();
+            StartCoroutine(HitStop());
             Debug.Log(gameObject.transform + " dead");
             collider.enabled = false;
+            if (isBoss) return;
             agent.enabled = false;
-            StartCoroutine(HitStop());
             return;
         }
         OnHit?.Invoke();
@@ -64,7 +67,7 @@ public class Health : MonoBehaviour
         for (int i = 0; i < flashRepeat; i++)
         {
             foreach (var mat in materialInstances)
-                mat.SetColor(EmissionColorID, flashColor);
+                mat.SetColor(EmissionColorID, flashColor[i]);
 
             yield return new WaitForSeconds(flashDuration);
 
