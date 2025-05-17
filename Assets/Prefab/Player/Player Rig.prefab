@@ -493,7 +493,7 @@ Transform:
   m_GameObject: {fileID: 608726693536311814}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.308, z: 0}
+  m_LocalPosition: {x: 0, y: -2.49, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 152be850e88820446b200313c6321029, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHeart: 5
+  maxHeart: 7
   OnDeath:
     m_PersistentCalls:
       m_Calls:
@@ -720,6 +720,14 @@ MonoBehaviour:
   flashDuration: 0.05
   flashRepeat: 2
   playerEffects: {fileID: 4202031492107375163}
+  heartsUI:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &2235507493361513936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -734,9 +742,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CoinCount>k__BackingField: 0
   <KeyCount>k__BackingField: 0
+  <healthCount>k__BackingField: 0
   arrowFireHandler: {fileID: 7362684469078157864}
   playerHealth: {fileID: 1608528927947667286}
   playerEffects: {fileID: 4202031492107375163}
+  coinScore: {fileID: 0}
+  keyScore: {fileID: 0}
+  healthScore: {fileID: 0}
+  arrowBundleCountText: {fileID: 0}
 --- !u!114 &8824411567519243957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1144,9 +1157,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CoinCount>k__BackingField: 0
   <KeyCount>k__BackingField: 0
+  <healthCount>k__BackingField: 0
   arrowFireHandler: {fileID: 7362684469078157864}
   playerHealth: {fileID: 1608528927947667286}
   playerEffects: {fileID: 4202031492107375163}
+  coinScore: {fileID: 0}
+  keyScore: {fileID: 0}
+  healthScore: {fileID: 0}
+  arrowBundleCountText: {fileID: 0}
 --- !u!54 &705429563611568875
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1943,7 +1961,7 @@ MonoBehaviour:
   m_Lens:
     FieldOfView: 25
     OrthographicSize: 5
-    NearClipPlane: -20
+    NearClipPlane: 0.01
     FarClipPlane: 30
     Dutch: 0
     ModeOverride: 0
@@ -3025,7 +3043,7 @@ Transform:
   m_GameObject: {fileID: 5851062039934785654}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 16, y: 23.935413, z: -16}
+  m_LocalPosition: {x: 16.000002, y: 20.137417, z: -16.000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3054,7 +3072,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1713179379521990390}
   m_Lens:
     FieldOfView: 25
-    OrthographicSize: 7
+    OrthographicSize: 10
     NearClipPlane: 10
     FarClipPlane: 60
     Dutch: 0
@@ -3529,7 +3547,7 @@ Transform:
   m_GameObject: {fileID: 7368428112549045305}
   serializedVersion: 2
   m_LocalRotation: {x: 0.35355356, y: -0.35355374, z: 0.14644659, w: 0.85355324}
-  m_LocalPosition: {x: 16.000008, y: 24.785423, z: -15.999971}
+  m_LocalPosition: {x: 16.000015, y: 20.137424, z: -15.999978}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3555,7 +3573,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 7684390347860488212}
+  m_Follow: {fileID: 3078955197279267621}
   m_Lens:
     FieldOfView: 25
     OrthographicSize: 8

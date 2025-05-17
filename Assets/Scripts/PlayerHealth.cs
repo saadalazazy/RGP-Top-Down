@@ -26,6 +26,11 @@ public class PlayerHealth : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    [Header("UI")]
+    [SerializeField] GameObject[] heartsUI;
+
+
+
     private void Start()
     {
         heart = maxHeart;
@@ -59,6 +64,7 @@ public class PlayerHealth : MonoBehaviour
         OnHit?.Invoke();
         LastHitDir = hitDir;
         HitImpact = hitImpact;
+        DecreseHeartUI();
     }
 
     private IEnumerator FlashHitEffect()
@@ -76,9 +82,28 @@ public class PlayerHealth : MonoBehaviour
             yield return new WaitForSeconds(flashDuration);
         }
     }
-
+    private void DecreseHeartUI()
+    {
+        for(int i = 0; i < heart;i++)
+        {
+            heartsUI[(int)heart].gameObject.active = true;
+        }
+        for(int i = (int)heart ;i < maxHeart;i++)
+        {
+            heartsUI[(int)heart].gameObject.active = false;
+        }
+    }
     public void IncreasHeart(int hearts)
     {
+        if (heart == maxHeart) return; 
         heart += hearts;
+        for (int i = 0; i < heart; i++)
+        {
+            heartsUI[(int)heart].gameObject.active = true;
+        }
+        for (int i = (int)heart; i < maxHeart; i++)
+        {
+            heartsUI[(int)heart].gameObject.active = false;
+        }
     }
 }
