@@ -40697,7 +40697,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.23666666
+  m_VoxelSize: 0.060000002
   m_MinRegionArea: 2
   m_NavMeshData: {fileID: 23800000, guid: 7ba86b4651535234c9d8b421f3e53f4e, type: 2}
   m_BuildHeightMesh: 0
@@ -67802,6 +67802,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackData:
   - {fileID: 11400000, guid: dadba2cf2182b7948a53f7476068ace0, type: 2}
+  - {fileID: 11400000, guid: a170c481fb00f224484a92553aea1e41, type: 2}
+  - {fileID: 11400000, guid: cdbd247fa01a89e46885550d2d3cd8d4, type: 2}
+  - {fileID: 11400000, guid: 6806656a91c19bf4aa5562412d68daec, type: 2}
   - {fileID: 11400000, guid: 077ced80cb6aa2845b00c2d47002b784, type: 2}
   currentBossState: 1
   lastBossState: 0

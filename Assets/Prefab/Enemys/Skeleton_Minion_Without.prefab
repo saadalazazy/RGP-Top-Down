@@ -1626,8 +1626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5021dd7562b9924f958c9663fab5a23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPlayer: {fileID: 0}
-  animator: {fileID: 1910835661547122337}
   moveSpeed: 3
   rotationSmoothSpeedEnemy: 3
   stoppingDistance: 2.25
@@ -1639,6 +1637,7 @@ MonoBehaviour:
   lastEnemyState: 0
   impactDamping: 5
   hitImpactForce: 5
+  dropItem: {fileID: 0}
 --- !u!114 &6540079061362446183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1682,10 +1681,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  flashColor:
+  - {r: 1, g: 1, b: 1, a: 6.917795e+22}
+  - {r: 2.5028267, g: 7.55e-43, b: 6.9e-44, a: 6e-45}
   flashDuration: 0.05
   flashRepeat: 2
   collider: {fileID: 538499298637278656}
+  isBoss: 0
 --- !u!136 &538499298637278656
 CapsuleCollider:
   m_ObjectHideFlags: 0
