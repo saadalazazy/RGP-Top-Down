@@ -16,14 +16,16 @@ public class Boss : MonoBehaviour
     private float rotationSpeed;
     private float stoppingDistance;
     private int AttackAnimationHash;
+    private int AttackAnimationidelHash;
     private float delayBeforeAttck;
     private float delayAfterAttck;
     private Vector3 spawnPosition;
 
 
-    private readonly int IdleCombatAnimationHash = Animator.StringToHash("Idle");
+    private readonly int IdleCombatAnimationHash = Animator.StringToHash("Idle0");
     private readonly int RunningAnimationHash = Animator.StringToHash("Running");
     private bool isAttackingCycleRunning = false;
+    private bool isIdleAttacking = false;
 
 
     public enum BossState
@@ -54,6 +56,7 @@ public class Boss : MonoBehaviour
         SwitchAttackStateTo(currentAttackIndex);
         SwitchStateTo(currentBossState);
         currentLifeState = LifeState.Normal;
+        animator.CrossFadeInFixedTime(RunningAnimationHash, 0.1f);
 
     }
     private void Update()
@@ -135,8 +138,9 @@ public class Boss : MonoBehaviour
         {
             case BossState.Movement:
                 animator.CrossFadeInFixedTime(RunningAnimationHash, 0.1f);
-                int randomIndex = Random.Range(0, attackData.Length);
-                SwitchAttackStateTo(randomIndex);
+
+                int indexAttack = GetIndexAttack();
+                SwitchAttackStateTo(indexAttack);
                 break;
 
             case BossState.Attacking:
@@ -145,9 +149,17 @@ public class Boss : MonoBehaviour
 
             case BossState.Idle:
                 agent.ResetPath();
-                animator.CrossFadeInFixedTime(IdleCombatAnimationHash, 0.1f);
+                if (isIdleAttacking)
+                    animator.CrossFadeInFixedTime(AttackAnimationidelHash, 0.1f);
+                else
+                    animator.CrossFadeInFixedTime(IdleCombatAnimationHash, 0.1f);
                 break;
         }
+    }
+
+    private int GetIndexAttack()
+    {
+        return Random.Range(0, attackData.Length);
     }
 
     public void SwitchAttackStateTo(int newIndex)
@@ -163,6 +175,7 @@ public class Boss : MonoBehaviour
         AttackAnimationHash = newAttackData.AttackAnimationHash;
         delayAfterAttck = newAttackData.delayAfterAttack;
         delayBeforeAttck = newAttackData.delayBeforeAttack;
+        AttackAnimationidelHash = newAttackData.AttackAnimationIdel;
 
         agent.speed = moveSpeed;
         agent.stoppingDistance = stoppingDistance;
@@ -171,8 +184,9 @@ public class Boss : MonoBehaviour
     IEnumerator DelayBeforeAttacking()
     {
         isAttackingCycleRunning = true;
-
+        isIdleAttacking = true;
         SwitchStateTo(BossState.Idle);
+        
         yield return new WaitForSeconds(delayBeforeAttck);
 
         SwitchStateTo(BossState.Attacking);
@@ -184,6 +198,7 @@ public class Boss : MonoBehaviour
 
     IEnumerator DelayAfterAttacking()
     {
+        isIdleAttacking =false;
         SwitchStateTo(BossState.Idle);
         yield return new WaitForSeconds(delayAfterAttck);
 

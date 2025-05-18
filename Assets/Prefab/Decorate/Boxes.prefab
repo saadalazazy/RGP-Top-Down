@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7997058844606597901}
   - component: {fileID: 8893099028579136359}
   - component: {fileID: 5948748684173422166}
-  - component: {fileID: 4390419551127417888}
+  - component: {fileID: 8665879295582476928}
   m_Layer: 0
   m_Name: box_large (2)
   m_TagString: Untagged
@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 7706315762501077}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.564895, z: -0, w: 0.8251628}
-  m_LocalPosition: {x: -0.5463886, y: 0.3000002, z: -1.5}
+  m_LocalPosition: {x: -0.5463886, y: 0.05000019, z: -1.5}
   m_LocalScale: {x: 0.8000001, y: 0.8, z: 0.8000001}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4390419551127417888
-CapsuleCollider:
+--- !u!65 &8665879295582476928
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,11 +102,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.14
-  m_Height: 1.5000001
-  m_Direction: 1
-  m_Center: {x: -0.000000029802326, y: 0.75000006, z: -0.00000011920929}
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5000001, z: 1.5000004}
+  m_Center: {x: -0.000001937151, y: 0.75000006, z: -0.00000011920929}
 --- !u!1 &3801493621150816316
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +116,7 @@ GameObject:
   - component: {fileID: 1315804808134793140}
   - component: {fileID: 6785735794352324417}
   - component: {fileID: 3255092271793034890}
-  - component: {fileID: 5461200479682827561}
+  - component: {fileID: 6887077109617449971}
   m_Layer: 0
   m_Name: box_large (1)
   m_TagString: Untagged
@@ -191,8 +189,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &5461200479682827561
-CapsuleCollider:
+--- !u!65 &6887077109617449971
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -209,11 +207,9 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.14
-  m_Height: 1.5000001
-  m_Direction: 1
-  m_Center: {x: -0.000000029802326, y: 0.75000006, z: -0.00000011920929}
+  serializedVersion: 3
+  m_Size: {x: 1.5, y: 1.5000001, z: 1.5000004}
+  m_Center: {x: -0.000001937151, y: 0.75000006, z: -0.00000011920929}
 --- !u!1 &7634510579087787813
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +255,7 @@ GameObject:
   - component: {fileID: 589521850602857062}
   - component: {fileID: 6579795058343554133}
   - component: {fileID: 8111750776737740476}
-  - component: {fileID: 6592183452448374354}
+  - component: {fileID: 1623445342791584183}
   m_Layer: 0
   m_Name: box_large
   m_TagString: Untagged
@@ -332,8 +328,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &6592183452448374354
-CapsuleCollider:
+--- !u!65 &1623445342791584183
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -350,8 +346,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.14
-  m_Height: 1.5000001
-  m_Direction: 1
-  m_Center: {x: -0.000000029802326, y: 0.75000006, z: -0.0000001192093}
+  serializedVersion: 3
+  m_Size: {x: 1.5000002, y: 1.5000001, z: 1.5000006}
+  m_Center: {x: -0.0000009834766, y: 0.75000006, z: -0.0000001192093}

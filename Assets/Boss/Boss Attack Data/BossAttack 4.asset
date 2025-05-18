@@ -16,6 +16,7 @@ MonoBehaviour:
   rotationSpeed: 5
   stoppingDistance: 0.5
   attackAnimationName: Jump_Start
+  attackAnimationIdelName: Idle0
   delayBeforeAttack: 1
   delayAfterAttack: 1
   followPlayer: 0

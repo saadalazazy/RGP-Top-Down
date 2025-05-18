@@ -16,6 +16,7 @@ MonoBehaviour:
   rotationSpeed: 3
   stoppingDistance: 2
   attackAnimationName: AttackingSlice
+  attackAnimationIdelName: Idle3
   delayBeforeAttack: 1
   delayAfterAttack: 1
   followPlayer: 0

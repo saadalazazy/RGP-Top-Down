@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class ArrowFireHandler : MonoBehaviour
@@ -12,6 +13,9 @@ public class ArrowFireHandler : MonoBehaviour
     public float delay;
     public bool canShoot = true;
 
+    [SerializeField] TextMeshProUGUI arrowBundleCountText;
+
+
     public void ShootingArrow()
     {
         if (canShoot)
@@ -20,7 +24,10 @@ public class ArrowFireHandler : MonoBehaviour
     public void DcreaseArrowCount()
     {
         if(ArrowCount > 0)
+        {
             ArrowCount--;
+            arrowBundleCountText.text = ArrowCount.ToString();
+        }
     }
     public void IncreaseArrowCount(int count)
     {

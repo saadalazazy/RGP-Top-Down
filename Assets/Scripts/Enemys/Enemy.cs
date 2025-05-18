@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering;
@@ -30,7 +29,7 @@ public class Enemy : MonoBehaviour
         Intro,Awake,Normal, Attacking, Dead, BeingHit
     }
 
-    [SerializeField] private EnemyState currentEnemyState;
+    [SerializeField] public EnemyState currentEnemyState;
     [SerializeField] public EnemyState lastEnemyState;  
     #endregion
     private Vector3 impact = Vector3.zero;
@@ -50,6 +49,7 @@ public class Enemy : MonoBehaviour
     CapsuleCollider capsulCollider;
 
     [SerializeField] GameObject dropItem;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -64,7 +64,6 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(canHit);
         if (agent.enabled) agent.Move(impact * Time.deltaTime);
         impact = Vector3.Lerp(impact, Vector3.zero, impactDamping * Time.deltaTime);
         switch (currentEnemyState)
@@ -126,15 +125,6 @@ public class Enemy : MonoBehaviour
 
         float currentSpeed = agent.velocity.magnitude;
         animator.SetFloat(MomvmentSpeed, currentSpeed, 0.1f, Time.deltaTime);
-    }
-
-    void CalculateDistance()
-    {
-        float distance = Vector3.Distance(targetPlayer.position, transform.position);
-        if (distance <= stoppingDistance)
-        {
-            SwitchStateTo(EnemyState.Attacking);
-        }
     }
 
     void RotateTowardsPlayer()

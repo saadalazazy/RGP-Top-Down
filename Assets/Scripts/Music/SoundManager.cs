@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class SoundManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class SoundManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         }
     }
+
 
     public void PlaySound3D(AudioClip clip, Vector3 pos)
     {

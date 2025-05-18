@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
 
     public bool IsInterAct { get; private set; } = false;
 
+    public bool IsHeal { get; private set; } = false;
+
     public event Action DodgeEvent;
 
     Controls controls;
@@ -92,6 +94,18 @@ public class InputManager : MonoBehaviour, Controls.IPlayerActions
         else if (context.canceled)
         {
             IsInterAct = false;
+        }
+    }
+
+    public void OnHeal(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            IsHeal = true;
+        }
+        else
+        {
+            IsHeal = false;
         }
     }
 }

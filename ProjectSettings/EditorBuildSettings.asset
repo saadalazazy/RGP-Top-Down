@@ -8,10 +8,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 0
+    path: Assets/Scenes/test.unity
+    guid: 9dfd539905d53f644b1fcdb834c333db
+  - enabled: 1
+    path: Assets/Boss/MainMenu.unity
+    guid: 703e56088ff2ca7418a06670a519d389
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: 90964e6248d664b42804efdff40794ad
   - enabled: 1
     path: Assets/Boss/Boss.unity
     guid: a65845b923fcc4740ae8babca04bd3f0
   - enabled: 1
-    path: Assets/Scenes/Before final.unity
-    guid: 6b414c65a0ad62b479951bda64127b27
+    path: Assets/Boss/BossCutscene.unity
+    guid: 9b7e54b1c3a53d14fb94c6dc5af4d16c
   m_configObjects: {}

@@ -16,6 +16,7 @@ MonoBehaviour:
   rotationSpeed: 100
   stoppingDistance: 2
   attackAnimationName: AttackingJumpChop
+  attackAnimationIdelName: Idle2
   delayBeforeAttack: 1
   delayAfterAttack: 3
   followPlayer: 1

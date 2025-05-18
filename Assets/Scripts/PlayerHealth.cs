@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
-    static public bool isDead = false;
+    public static bool isDead = false;
+
     float heart;
     [SerializeField] float maxHeart = 5;
     [field: HideInInspector] public float HitImpact { get; private set; }
@@ -30,7 +31,6 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] GameObject[] heartsUI;
 
 
-
     private void Start()
     {
         heart = maxHeart;
@@ -46,7 +46,10 @@ public class PlayerHealth : MonoBehaviour
                 materialInstances.Add(mats[i]);
             }
         }
+
+        UpdateHeartUI();
     }
+
     public void DecreaseHeart(float damage, Vector3 hitDir, float hitImpact)
     {
         if (heart <= 0) return;
@@ -59,12 +62,40 @@ public class PlayerHealth : MonoBehaviour
             OnDeath?.Invoke();
             Debug.Log(gameObject.transform + " dead");
             isDead = true;
-            return;
+            StartCoroutine(LoadSceneAfterDelay(SceneManager.GetActiveScene().name, 3));
         }
-        OnHit?.Invoke();
+        else
+        {
+            OnHit?.Invoke();
+        }
+
         LastHitDir = hitDir;
         HitImpact = hitImpact;
-        DecreseHeartUI();
+        UpdateHeartUI();
+    }
+    IEnumerator LoadSceneAfterDelay(string sceneName, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+    public void IncreaseHeart(int hearts)
+    {
+        if (heart == maxHeart) return;
+
+        heart = Mathf.Clamp(heart + hearts, 0, maxHeart);
+        UpdateHeartUI();
+    }
+
+    private void UpdateHeartUI()
+    {
+        if (heartsUI == null || heartsUI.Length == 0) return;
+
+        int currentHearts = Mathf.Clamp(Mathf.RoundToInt(heart), 0, heartsUI.Length);
+
+        for (int i = 0; i < heartsUI.Length; i++)
+        {
+            heartsUI[i].SetActive(i < currentHearts);
+        }
     }
 
     private IEnumerator FlashHitEffect()
@@ -80,30 +111,6 @@ public class PlayerHealth : MonoBehaviour
                 mat.SetColor(EmissionColorID, Color.black);
 
             yield return new WaitForSeconds(flashDuration);
-        }
-    }
-    private void DecreseHeartUI()
-    {
-        for(int i = 0; i < heart;i++)
-        {
-            heartsUI[(int)heart].gameObject.active = true;
-        }
-        for(int i = (int)heart ;i < maxHeart;i++)
-        {
-            heartsUI[(int)heart].gameObject.active = false;
-        }
-    }
-    public void IncreasHeart(int hearts)
-    {
-        if (heart == maxHeart) return; 
-        heart += hearts;
-        for (int i = 0; i < heart; i++)
-        {
-            heartsUI[(int)heart].gameObject.active = true;
-        }
-        for (int i = (int)heart; i < maxHeart; i++)
-        {
-            heartsUI[(int)heart].gameObject.active = false;
         }
     }
 }

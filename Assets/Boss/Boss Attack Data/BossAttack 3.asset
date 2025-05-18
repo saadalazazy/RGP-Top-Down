@@ -16,6 +16,7 @@ MonoBehaviour:
   rotationSpeed: 5
   stoppingDistance: 10
   attackAnimationName: SpellcastSummon
+  attackAnimationIdelName: Idle0
   delayBeforeAttack: 1
   delayAfterAttack: 4
   followPlayer: 1

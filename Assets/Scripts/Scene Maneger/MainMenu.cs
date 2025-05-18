@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
+    private void Start()
+    {
+        MusicManager.Instance.PlayMusic("MainMenu");
+    }
     public void Play()
     {
-        SceneManager.LoadScene("Boss");
-        MusicManager.Instance.PlayMusic("MainMenu");
+        SceneManager.LoadScene("Level1");
+        MusicManager.Instance.PlayMusic("Level1");
     }
 
     public void Quit()

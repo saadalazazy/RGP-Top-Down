@@ -24,6 +24,7 @@ public class Health : MonoBehaviour
     float hitStopTime = 0.25f;
 
     [SerializeField] bool isBoss = false;
+    [SerializeField] bool isSpawn = false;
 
     private void Start()
     {
@@ -53,7 +54,8 @@ public class Health : MonoBehaviour
             OnDeath?.Invoke();
             StartCoroutine(HitStop());
             Debug.Log(gameObject.transform + " dead");
-            collider.enabled = false;
+            if(!isSpawn)
+                collider.enabled = false;
             if (isBoss) return;
             agent.enabled = false;
             return;

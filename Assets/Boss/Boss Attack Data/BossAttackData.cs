@@ -10,6 +10,7 @@ public class BossAttackData : ScriptableObject
     public float stoppingDistance;
 
     [SerializeField] private string attackAnimationName;
+    [SerializeField] private string attackAnimationIdelName;
 
     public float delayBeforeAttack;
     public float delayAfterAttack;
@@ -18,4 +19,5 @@ public class BossAttackData : ScriptableObject
     public bool rotateOnly;
     public bool returnToSpawn;
     [HideInInspector] public int AttackAnimationHash => Animator.StringToHash(attackAnimationName);
+    [HideInInspector] public int AttackAnimationIdel => Animator.StringToHash(attackAnimationIdelName);
 }

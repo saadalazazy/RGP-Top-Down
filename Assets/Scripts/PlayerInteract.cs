@@ -14,6 +14,8 @@ public class PlayerInteract : MonoBehaviour
     [SerializeField] private Vector3 rayDirection = Vector3.forward;
     [SerializeField] private bool useLocalDirection = true;
 
+    public Gate gate;
+
     void Update()
     {
         Vector3 direction = useLocalDirection ? transform.TransformDirection(rayDirection.normalized) : rayDirection.normalized;
@@ -43,7 +45,16 @@ public class PlayerInteract : MonoBehaviour
                 else if(hit.collider.TryGetComponent<Lever>(out Lever lever))
                 {
                     lever.OpenLever();
+                    lever.collider.enabled = false;
                     animator.CrossFadeInFixedTime("Look", 0.1f);
+                    if(!gate.isOpen1)
+                    {
+                        gate.OpenHalph();
+                    }
+                    else
+                    {
+                        gate.Open2Halph();
+                    }
                 }
             }
         }
