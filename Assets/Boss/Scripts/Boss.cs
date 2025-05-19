@@ -159,7 +159,25 @@ public class Boss : MonoBehaviour
 
     private int GetIndexAttack()
     {
-        return Random.Range(0, attackData.Length);
+        int index = 0;
+        if(GetComponent<Health>().health > 800)
+        {
+            index = Random.Range(0, 2);
+        }
+        else if (GetComponent<Health>().health > 600)
+        {
+            index = Random.Range(1, 3);
+        }
+        else if(GetComponent<Health>().health > 400)
+        {
+            index = Random.Range(2, 4);
+        }
+        else if(GetComponent<Health>().health > 0)
+        {
+            index = Random.Range(3, 5);
+        }
+
+        return index;
     }
 
     public void SwitchAttackStateTo(int newIndex)

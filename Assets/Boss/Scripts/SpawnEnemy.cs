@@ -13,11 +13,19 @@ public class SpawnEnemy : MonoBehaviour
     {
         for (int i = 0; i < numberOfEnemies; i++)
         {
-            Vector3 randomPosition = GetRandomPosition();
-            GameObject randomEnemy = GetRandomEnemy();
-            GameObject enemy = Instantiate(randomEnemy, randomPosition, GetRandomRotatoin());
-            enemy.GetComponent<Enemy>().SwitchToAwakeState();
+            StartCoroutine(SpawnAndWakeEnemy());
         }
+    }
+    IEnumerator SpawnAndWakeEnemy()
+    {
+        Vector3 randomPosition = GetRandomPosition();
+        GameObject randomEnemy = GetRandomEnemy();
+        GameObject newEnemy = Instantiate(randomEnemy, randomPosition, Quaternion.identity);
+        Enemy enemyScript = newEnemy.GetComponent<Enemy>();
+
+        yield return null; // Wait 1 frame to ensure Start() has run
+
+        enemyScript.SwitchToAwakeState();
     }
 
     Vector3 GetRandomPosition()

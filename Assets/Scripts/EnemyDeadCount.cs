@@ -11,6 +11,7 @@ public class EnemyDeadCount : MonoBehaviour
     [SerializeField] Gate gate;
     [SerializeField] Gate gate2;
     [SerializeField] int EnemyDead;
+
     private void OnTriggerStay(Collider other)
     {
         if (!other.TryGetComponent<Enemy>(out Enemy enemy))

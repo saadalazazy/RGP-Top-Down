@@ -9,8 +9,8 @@ public class PlayerHealth : MonoBehaviour
 {
     public static bool isDead = false;
 
-    float heart;
-    [SerializeField] float maxHeart = 5;
+    public float heart;
+    [SerializeField] public float maxHeart = 5;
     [field: HideInInspector] public float HitImpact { get; private set; }
     [field: HideInInspector] public Vector3 LastHitDir { get; private set; }
 
@@ -76,6 +76,7 @@ public class PlayerHealth : MonoBehaviour
     IEnumerator LoadSceneAfterDelay(string sceneName, float delay)
     {
         yield return new WaitForSeconds(delay);
+        isDead = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
     public void IncreaseHeart(int hearts)

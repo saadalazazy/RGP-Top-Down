@@ -1257,7 +1257,7 @@ MonoBehaviour:
   spawnRange: 101.4
   coolDownAttack: 2
   delayBeforeAttack: 1
-  currentEnemyState: 0
+  currentEnemyState: 1
   lastEnemyState: 0
   impactDamping: 5
   hitImpactForce: 5
@@ -1274,6 +1274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f485988d8406cbb4187291fab314b932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   maxHealth: 100
   OnDeath:
     m_PersistentCalls:

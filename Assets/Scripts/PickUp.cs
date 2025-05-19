@@ -29,6 +29,22 @@ public class PickUp : MonoBehaviour
         arrowBundleCountText.text = arrowFireHandler.ArrowCount.ToString();
         healthScore.text = healthCount.ToString();
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.Q))
+        {
+            if(playerHealth.heart == playerHealth.maxHeart || healthCount == 0)
+            {
+                return;
+            }
+            else
+            {
+                playerHealth.IncreaseHeart(1);
+                DecreasehealthCount(1);
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.GetComponent<Coin>())
@@ -74,8 +90,11 @@ public class PickUp : MonoBehaviour
         if(KeyCount > 0)
             KeyCount-= numKey;
         keyScore.text = KeyCount.ToString();
-
-
     }
-
+    public void DecreasehealthCount(int numKey)
+    {
+        if (healthCount > 0)
+            healthCount -= numKey;
+        healthScore.text = healthCount.ToString();
+    }
 }

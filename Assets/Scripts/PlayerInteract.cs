@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerInteract : MonoBehaviour
@@ -16,20 +17,42 @@ public class PlayerInteract : MonoBehaviour
 
     public Gate gate;
 
-    void Update()
+    Coroutine questCoroutine;
+
+    [SerializeField] TextMeshProUGUI QuestText;
+    private void Start()
+    {
+        if(QuestText != null)
+            QuestText.text = "";
+    }
+
+    private void Update()
     {
         Vector3 direction = useLocalDirection ? transform.TransformDirection(rayDirection.normalized) : rayDirection.normalized;
         Ray ray = new Ray(transform.position, direction);
-        RaycastHit hit;
-
         Debug.DrawRay(ray.origin, direction * interactDistance, Color.green);
 
-        if (inputManager.IsInterAct)
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, interactDistance))
         {
-            if (Physics.Raycast(ray, out hit, interactDistance))
+            // Only show "Interact With E" if no quest message is showing
+            if (questCoroutine == null)
+            {
+                if (hit.collider.GetComponent<Door>() || hit.collider.GetComponent<Lever>())
+                {
+                    QuestText.text = "Interact With E";
+                }
+                else
+                {
+                    QuestText.text = "";
+                }
+            }
+
+            if (inputManager.IsInterAct)
             {
                 Debug.Log("Hit: " + hit.collider.name);
-                if (hit.collider.TryGetComponent<Door>(out Door door))
+
+                if (hit.collider.TryGetComponent(out Door door))
                 {
                     if (pickup.KeyCount >= door.numKeyRequirment)
                     {
@@ -39,15 +62,23 @@ public class PlayerInteract : MonoBehaviour
                     }
                     else
                     {
-                        Debug.Log("You need a key");
+                        if (questCoroutine == null)
+                        {
+                            questCoroutine = StartCoroutine(DelayToRemoveText("You need " + door.numKeyRequirment + " key(s) to open"));
+                        }
                     }
                 }
-                else if(hit.collider.TryGetComponent<Lever>(out Lever lever))
+                else if (hit.collider.TryGetComponent(out Lever lever))
                 {
                     lever.OpenLever();
-                    lever.collider.enabled = false;
+
+                    Collider leverCollider = lever.GetComponent<Collider>();
+                    if (leverCollider != null)
+                        leverCollider.enabled = false;
+
                     animator.CrossFadeInFixedTime("Look", 0.1f);
-                    if(!gate.isOpen1)
+
+                    if (!gate.isOpen1)
                     {
                         gate.OpenHalph();
                     }
@@ -58,5 +89,19 @@ public class PlayerInteract : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            if (questCoroutine == null )
+                if(QuestText != null)
+                    QuestText.text = "";
+        }
+    }
+
+    IEnumerator DelayToRemoveText(string text)
+    {
+        QuestText.text = text;
+        yield return new WaitForSeconds(3);
+        QuestText.text = "";
+        questCoroutine = null;
     }
 }

@@ -18,6 +18,7 @@ public class SequentialSpawner : MonoBehaviour
        {
             Instantiate(enemy, spawnPoint.position, spawnPoint.rotation);
             yield return new WaitForSeconds(spawnDelay);
-        }
+       }
+       Destroy(gameObject);
     }
 }

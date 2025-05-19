@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
@@ -50,20 +50,37 @@ public class Enemy : MonoBehaviour
 
     [SerializeField] GameObject dropItem;
 
+
+    private bool hasResetOnPlayerDeath = false;
+
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         capsulCollider = GetComponent<CapsuleCollider>();
         animator = GetComponent<Animator>();
-        targetPlayer = GameObject.FindWithTag("Player").transform;
+        targetPlayer = GameObject.FindWithTag("Player")?.transform;
         spawnPosition = transform.position;
+    }
+
+    private void Start()
+    {
+        if (targetPlayer == null)
+        {
+            Debug.LogError("Target Player not found! Make sure the player has the tag 'Player'.");
+            enabled = false;
+            return;
+        }
+
         agent.speed = moveSpeed;
         agent.stoppingDistance = stoppingDistance;
+
         SwitchStateTo(currentEnemyState);
     }
 
+
     private void Update()
     {
+        Debug.Log(targetPlayer);
         if (agent.enabled) agent.Move(impact * Time.deltaTime);
         impact = Vector3.Lerp(impact, Vector3.zero, impactDamping * Time.deltaTime);
         switch (currentEnemyState)
@@ -86,9 +103,37 @@ public class Enemy : MonoBehaviour
             case EnemyState.BeingHit:
                 break;
         }
-        if (PlayerHealth.isDead)
-            SwitchStateTo(EnemyState.Normal);
+        if (PlayerHealth.isDead && !hasResetOnPlayerDeath)
+        {
+            ResetEnemyToSpawn();
+        }
+        if (!PlayerHealth.isDead && hasResetOnPlayerDeath)
+        {
+            hasResetOnPlayerDeath = false;
+        }
     }
+    private void ResetEnemyToSpawn()
+    {
+        hasResetOnPlayerDeath = true;
+
+        if (attackCoroutine != null)
+            StopCoroutine(attackCoroutine);
+
+        impact = Vector3.zero;
+        agent.enabled = false;
+        transform.position = spawnPosition;
+        transform.rotation = Quaternion.identity;
+        agent.enabled = true;
+        agent.ResetPath();
+
+        capsulCollider.enabled = true;
+        animator.Play(Intro);
+        currentEnemyState = EnemyState.Intro;
+        lastEnemyState = EnemyState.Intro;
+
+        GetComponent<Health>()?.ResetHealth();
+    }
+
 
     void CalculateEnemyMovement()
     {
@@ -235,6 +280,6 @@ public class Enemy : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, range);
 
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(spawnPosition != Vector3.zero ? spawnPosition : transform.position, spawnRange); // Spawn patrol range
+        Gizmos.DrawWireSphere(spawnPosition != Vector3.zero ? spawnPosition : transform.position, spawnRange);
     }
 }

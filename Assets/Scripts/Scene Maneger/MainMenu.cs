@@ -14,7 +14,11 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("Level1");
         MusicManager.Instance.PlayMusic("Level1");
     }
-
+    public void Mainmenu()
+    {
+        SceneManager.LoadScene("MainMenu");
+        MusicManager.Instance.PlayMusic("MainMenu");
+    }
     public void Quit()
     {
         Application.Quit();

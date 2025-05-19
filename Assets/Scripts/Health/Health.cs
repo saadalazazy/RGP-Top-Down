@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class Health : MonoBehaviour
 {
-    private float health;
+    public float health;
     [SerializeField] float maxHealth = 100;
     [SerializeField] UnityEvent OnDeath;
     [SerializeField] UnityEvent OnHit;
@@ -56,12 +57,21 @@ public class Health : MonoBehaviour
             Debug.Log(gameObject.transform + " dead");
             if(!isSpawn)
                 collider.enabled = false;
-            if (isBoss) return;
+            if(isBoss)
+            {
+                StartCoroutine(Delay());
+            }
             agent.enabled = false;
             return;
         }
         OnHit?.Invoke();
         CinemaMahchineShake.instance.ShakeCamera(1,0.2f);
+    }
+
+    private IEnumerator Delay()
+    {
+       yield return new WaitForSeconds(2f);
+       SceneManager.LoadScene("MainMenu");
     }
 
     private IEnumerator FlashHitEffect()
@@ -84,5 +94,16 @@ public class Health : MonoBehaviour
         Time.timeScale = 0;
         yield return new WaitForSecondsRealtime(hitStopTime);
         Time.timeScale = 1;
+    }
+
+    public void ResetHealth()
+    {
+        health = maxHealth;
+
+        if (collider != null)
+            collider.enabled = true;
+
+        if (agent != null)
+            agent.enabled = true;
     }
 }

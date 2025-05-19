@@ -8865,6 +8865,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1608528927947667286, guid: e8d90557512d77f4cb5b6f06c7370b29,
         type: 3}
+      propertyPath: maxHeart
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1608528927947667286, guid: e8d90557512d77f4cb5b6f06c7370b29,
+        type: 3}
       propertyPath: heartsUI.Array.data[0]
       value: 
       objectReference: {fileID: 97480676}
@@ -9103,6 +9108,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -16
       objectReference: {fileID: 0}
+    - target: {fileID: 8824411567519243957, guid: e8d90557512d77f4cb5b6f06c7370b29,
+        type: 3}
+      propertyPath: QuestText
+      value: 
+      objectReference: {fileID: 1411046045}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10765,6 +10775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f485988d8406cbb4187291fab314b932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   maxHealth: 10000
   OnDeath:
     m_PersistentCalls:
@@ -10801,6 +10812,7 @@ MonoBehaviour:
   flashRepeat: 2
   collider: {fileID: 338475069}
   isBoss: 0
+  isSpawn: 0
 --- !u!114 &338475068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67638,6 +67650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f485988d8406cbb4187291fab314b932, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 0
   maxHealth: 1000
   OnDeath:
     m_PersistentCalls:
@@ -67664,6 +67677,7 @@ MonoBehaviour:
   flashRepeat: 2
   collider: {fileID: 7965530913249921698}
   isBoss: 1
+  isSpawn: 0
 --- !u!4 &5073546000410634097
 Transform:
   m_ObjectHideFlags: 0
@@ -68561,7 +68575,6 @@ MonoBehaviour:
   currentBossState: 1
   lastBossState: 0
   currentLifeState: 2
-  health: {fileID: 0}
 --- !u!114 &7965530913249921700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68574,11 +68587,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4a85db2b968049469594e6b14bb66d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfEnemies: 2
+  numberOfEnemies: 1
   enemyPrefabs:
-  - {fileID: 4449557032852861424, guid: b0f7ce17a7fc09e40bddef7ed20f926a, type: 3}
+  - {fileID: 3510538145156093084, guid: a19b55b3b293d364b9cc35ae5a375918, type: 3}
   spawnCenterPoint: {fileID: 1766143168}
-  spawnRadius: 10
+  spawnRadius: 6
 --- !u!114 &7965530913249921701
 MonoBehaviour:
   m_ObjectHideFlags: 0
