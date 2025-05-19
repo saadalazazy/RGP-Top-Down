@@ -543,11 +543,12 @@ MonoBehaviour:
   spawnRange: 116.4
   coolDownAttack: 2
   delayBeforeAttack: 1
-  currentEnemyState: 0
+  currentEnemyState: 1
   lastEnemyState: 0
   impactDamping: 5
   hitImpactForce: 3
-  dropItem: {fileID: 0}
+  dropItem: {fileID: 8060190481461849811, guid: cc3a55d124865184bb30046e569f4fdb,
+    type: 3}
 --- !u!114 &6958022820011357826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,7 +599,7 @@ MonoBehaviour:
   flashRepeat: 2
   collider: {fileID: 5358114221627564546}
   isBoss: 0
-  isSpawn: 0
+  isSpawn: 1
 --- !u!114 &2435623769941758254
 MonoBehaviour:
   m_ObjectHideFlags: 0

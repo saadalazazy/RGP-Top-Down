@@ -130,8 +130,8 @@ GameObject:
   - component: {fileID: 2526141145048442744}
   - component: {fileID: 2635430137136662746}
   - component: {fileID: 8360011512152274034}
-  - component: {fileID: 7480430982048703843}
   - component: {fileID: 743914063725063290}
+  - component: {fileID: 2191910739257371704}
   m_Layer: 0
   m_Name: bottle_A_green
   m_TagString: Untagged
@@ -232,8 +232,24 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &7480430982048703843
-SphereCollider:
+--- !u!114 &743914063725063290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8060190481461849811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c65b74a8908e347acde17102550529, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: {x: 0, y: 100, z: 0}
+  floatAmplitude: 0.5
+  floatFrequency: 1
+  healthGain: 1
+--- !u!65 &2191910739257371704
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -251,21 +267,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.4428566
-  m_Center: {x: 0.000000007450581, y: 0.44285798, z: 0.00000027567148}
---- !u!114 &743914063725063290
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8060190481461849811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28c65b74a8908e347acde17102550529, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotationSpeed: {x: 0, y: 100, z: 0}
-  floatAmplitude: 0.5
-  floatFrequency: 1
-  healthGain: 1
+  m_Size: {x: 0.36841005, y: 2.6126413, z: 0.3684101}
+  m_Center: {x: 0, y: 1.2102709, z: 0.0000002682209}

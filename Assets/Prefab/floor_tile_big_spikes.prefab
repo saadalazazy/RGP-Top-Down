@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bfe152d521edd64fa93888a3f8d0f0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damage: 10
-  hitImpact: 10
+  Damage: 2
+  hitImpact: 20
   myCollider: {fileID: 7932367105605312198}
   isEnmey: 1

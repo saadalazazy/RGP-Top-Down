@@ -1908,7 +1908,8 @@ MonoBehaviour:
   lastEnemyState: 0
   impactDamping: 5
   hitImpactForce: 5
-  dropItem: {fileID: 0}
+  dropItem: {fileID: 8060190481461849811, guid: cc3a55d124865184bb30046e569f4fdb,
+    type: 3}
 --- !u!114 &7226328024658750204
 MonoBehaviour:
   m_ObjectHideFlags: 0

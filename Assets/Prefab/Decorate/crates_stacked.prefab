@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6374024420603129482}
   - component: {fileID: 3341041241678520509}
   - component: {fileID: 3892222358663301481}
-  - component: {fileID: 4824056461320590689}
+  - component: {fileID: 3490745037191863966}
   m_Layer: 0
   m_Name: crates_stacked
   m_TagString: Untagged
@@ -84,8 +84,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &4824056461320590689
-CapsuleCollider:
+--- !u!65 &3490745037191863966
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -102,8 +102,6 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1.1247005
-  m_Height: 2.142296
-  m_Direction: 1
-  m_Center: {x: 0.04541227, y: 1.0711437, z: -0.03254723}
+  serializedVersion: 3
+  m_Size: {x: 2.0891838, y: 2.142296, z: 2.2494016}
+  m_Center: {x: 0.045412276, y: 1.0711437, z: -0.032551054}

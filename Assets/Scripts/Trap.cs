@@ -20,7 +20,7 @@ public class Trap : MonoBehaviour
     }
     IEnumerator CloseTrap()
     {
-        yield return new WaitForSeconds(openTrapTime);
+        yield return new WaitForSeconds(closeTrapTime);
         animator.CrossFadeInFixedTime("Close Trap", 0.1f);
         StartCoroutine(OpenTrap());
     }
