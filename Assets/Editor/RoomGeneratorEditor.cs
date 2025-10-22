@@ -5,13 +5,15 @@ using UnityEngine;
 [CustomEditor(typeof(RoomGenerator))]
 public class RoomGeneratorEditor : Editor
 {
-    SerializedProperty roomHeight;
-    SerializedProperty roomWidth;
+    SerializedProperty gridX;
+    SerializedProperty GridY;
+
     SerializedProperty tileSize;
+    SerializedProperty foundationSize;
     SerializedProperty wallSize;
     SerializedProperty tileOffset;
-    SerializedProperty doorPosX;
-    SerializedProperty doorPosY;
+    SerializedProperty wallOffset;
+    SerializedProperty doorPos;
     SerializedProperty floorCount;
     SerializedProperty makeFloor;
     SerializedProperty makeWall;
@@ -33,14 +35,15 @@ public class RoomGeneratorEditor : Editor
 
     private void OnEnable()
     {
-        roomHeight = serializedObject.FindProperty("roomHeight");
-        roomWidth = serializedObject.FindProperty("roomWidth");
+        gridX = serializedObject.FindProperty("gridX");
+        GridY = serializedObject.FindProperty("GridY");
 
         tileSize = serializedObject.FindProperty("tileSize");
-        wallSize = serializedObject.FindProperty("wallSize");
+        foundationSize = serializedObject.FindProperty("foundationSize");
+        wallSize = serializedObject.FindProperty("wallSize"); // Vector2
         tileOffset = serializedObject.FindProperty("tileOffset");
-        doorPosX = serializedObject.FindProperty("doorPosX");
-        doorPosY = serializedObject.FindProperty("doorPosY");
+        wallOffset = serializedObject.FindProperty("wallOffset");
+        doorPos = serializedObject.FindProperty("doorPos");
         floorCount = serializedObject.FindProperty("floorCount");
         makeFloor = serializedObject.FindProperty("makeFloor");
         makeWall = serializedObject.FindProperty("makeWall");
@@ -62,8 +65,8 @@ public class RoomGeneratorEditor : Editor
         serializedObject.Update();
 
         EditorGUILayout.LabelField("Room Dimensions", EditorStyles.boldLabel);
-        EditorGUILayout.PropertyField(roomHeight);
-        EditorGUILayout.PropertyField(roomWidth);
+        EditorGUILayout.PropertyField(gridX);
+        EditorGUILayout.PropertyField(GridY);
 
         EditorGUILayout.Space();
 
@@ -72,10 +75,11 @@ public class RoomGeneratorEditor : Editor
         {
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(tileSize);
+            EditorGUILayout.PropertyField(foundationSize);
             EditorGUILayout.PropertyField(wallSize);
             EditorGUILayout.PropertyField(tileOffset);
-            EditorGUILayout.PropertyField(doorPosX);
-            EditorGUILayout.PropertyField(doorPosY);
+            EditorGUILayout.PropertyField(wallOffset);
+            EditorGUILayout.PropertyField(doorPos);
             EditorGUILayout.PropertyField(floorCount);
             EditorGUILayout.PropertyField(makeFloor);
             EditorGUILayout.PropertyField(makeWall);
@@ -92,23 +96,12 @@ public class RoomGeneratorEditor : Editor
             EditorGUI.indentLevel++;
             EditorGUILayout.PropertyField(tiles, true);
             EditorGUILayout.PropertyField(walls, true);
-            EditorGUILayout.PropertyField(firstWalls, true);
             EditorGUILayout.PropertyField(wallCorners, true);
             EditorGUILayout.PropertyField(wallHalves, true);
             EditorGUILayout.PropertyField(doors, true);
+            EditorGUILayout.PropertyField(floorFoundation,true);
             EditorGUI.indentLevel--;
         }
-
-        EditorGUILayout.Space();
-
-        showFoundation = EditorGUILayout.Foldout(showFoundation, "Foundation Prefab");
-        if (showFoundation)
-        {
-            EditorGUI.indentLevel++;
-            EditorGUILayout.PropertyField(floorFoundation);
-            EditorGUI.indentLevel--;
-        }
-
         EditorGUILayout.Space();
 
         RoomGenerator generator = (RoomGenerator)target;

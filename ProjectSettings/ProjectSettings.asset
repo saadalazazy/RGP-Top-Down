@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: DefaultCompany
-  productName: Game design project
+  productName: Skeleton Reign
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
@@ -856,8 +856,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Game design project
-  metroPackageVersion: 
+  metroPackageName: Gamedesignproject
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: Assets/WSATestCertificate.pfx
   metroCertificatePassword: 
   metroCertificateSubject: DefaultCompany
@@ -865,7 +865,7 @@ PlayerSettings:
   metroCertificateNotAfter: 80053b390ee7dc01
   metroApplicationDescription: Game design project
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Game design project
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   attackAnimationName: SpellcastSummon
   attackAnimationIdelName: Idle0
   delayBeforeAttack: 1
-  delayAfterAttack: 4
+  delayAfterAttack: 1
   followPlayer: 1
   rotateOnly: 1
   returnToSpawn: 0

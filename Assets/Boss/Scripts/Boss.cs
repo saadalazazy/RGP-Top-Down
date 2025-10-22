@@ -139,7 +139,7 @@ public class Boss : MonoBehaviour
             case BossState.Movement:
                 animator.CrossFadeInFixedTime(RunningAnimationHash, 0.1f);
 
-                int indexAttack = GetIndexAttack();
+                int indexAttack = GetRandomIndexAttack();
                 SwitchAttackStateTo(indexAttack);
                 break;
 
@@ -160,7 +160,7 @@ public class Boss : MonoBehaviour
     private int GetIndexAttack()
     {
         int index = 0;
-        if(GetComponent<Health>().health > 800)
+        if (GetComponent<Health>().health > 800)
         {
             index = Random.Range(0, 2);
         }
@@ -168,15 +168,40 @@ public class Boss : MonoBehaviour
         {
             index = Random.Range(1, 3);
         }
-        else if(GetComponent<Health>().health > 400)
+        else if (GetComponent<Health>().health > 400)
         {
             index = Random.Range(2, 4);
         }
-        else if(GetComponent<Health>().health > 0)
+        else if (GetComponent<Health>().health > 0)
         {
             index = Random.Range(3, 5);
         }
 
+        return index;
+    }
+    private int GetRandomIndexAttack()
+    {
+
+        int previousIndex = -1;
+        int index;
+        do
+        {
+            int randomValue = Random.Range(0, 100);
+
+            if (randomValue < 30)
+                index = 0;
+            else if (randomValue < 55)
+                index = 1;
+            else if (randomValue < 75)
+                index = 2;
+            else if (randomValue < 90)
+                index = 3;
+            else
+                index = 4;
+
+        } while (index == previousIndex);
+
+        previousIndex = index;
         return index;
     }
 

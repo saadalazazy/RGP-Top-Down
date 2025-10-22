@@ -18,7 +18,7 @@ MonoBehaviour:
   attackAnimationName: AttackingJumpChop
   attackAnimationIdelName: Idle2
   delayBeforeAttack: 1
-  delayAfterAttack: 3
+  delayAfterAttack: 1
   followPlayer: 1
   rotateOnly: 1
   returnToSpawn: 0

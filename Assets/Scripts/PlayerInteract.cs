@@ -23,7 +23,7 @@ public class PlayerInteract : MonoBehaviour
     private void Start()
     {
         if(QuestText != null)
-            QuestText.text = "";
+            QuestText.text = "0";
     }
 
     private void Update()
@@ -40,11 +40,13 @@ public class PlayerInteract : MonoBehaviour
             {
                 if (hit.collider.GetComponent<Door>() || hit.collider.GetComponent<Lever>())
                 {
-                    QuestText.text = "Interact With E";
+                    if (QuestText != null)
+                        QuestText.text = "Interact With E";
                 }
                 else
                 {
-                    QuestText.text = "";
+                    if (QuestText != null)
+                        QuestText.text = "";
                 }
             }
 
@@ -99,6 +101,7 @@ public class PlayerInteract : MonoBehaviour
 
     IEnumerator DelayToRemoveText(string text)
     {
+        if (QuestText == null) StopAllCoroutines();
         QuestText.text = text;
         yield return new WaitForSeconds(3);
         QuestText.text = "";

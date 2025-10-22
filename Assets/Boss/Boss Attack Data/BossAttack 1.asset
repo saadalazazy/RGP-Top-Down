@@ -17,8 +17,8 @@ MonoBehaviour:
   stoppingDistance: 5
   attackAnimationName: AttackingSpinning
   attackAnimationIdelName: idle1
-  delayBeforeAttack: 2
-  delayAfterAttack: 1.5
+  delayBeforeAttack: 1
+  delayAfterAttack: 1
   followPlayer: 1
   rotateOnly: 0
   returnToSpawn: 0

@@ -95,7 +95,7 @@ public class PlayerHealth : MonoBehaviour
 
         for (int i = 0; i < heartsUI.Length; i++)
         {
-            heartsUI[i].SetActive(i < currentHearts);
+            //heartsUI[i].SetActive(i < currentHearts);
         }
     }
 
